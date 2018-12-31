@@ -1,0 +1,9 @@
+# Each line is an action you want Cozmo to make followed by a value needed for the movement.
+# This step can be drive, turn, or cube; followed by distance in mm, degrees to turn (left positive), or 0, respectively.
+# An example line is: "drive,500" to make Cozmo drive 500 mm forward.
+# Steps:
+cube,0
+turn,-90
+drive,400
+turn,90
+drive,200

@@ -1,0 +1,12 @@
+(Angle to turn (left positive), is segment inclined, distance to drive on xy plane (in inches).)
+((Angle, Incline?, Distance))
+0,0,3.5
+0,1,10
+90,0,3.5
+0,1,15.125
+-90,0,3.5
+-90,0,3.5
+0,1,15.125
+90,0,3.5
+90,0,3.5
+0,1,15.125
