@@ -1,6 +1,9 @@
 # CS 16x Work
 16x Work is a repository for all the work I do for my CS 160, CS 161 (skipped, done from home over break), and CS 162 classes at Oregon State University. It is a mixture of lab, personal, and assignment projects that are horribly organized and generally just thrown in folders. CS 160 was taken while I was still using Mac OS for my general work and exclusively using Visual Studio Code for all work. As of CS 161 work, I have begun to use Fedora 29 (after a brief stint of Ubuntu 18.10). I have also started using vim as my primary editor. I still occasionally use VSCode for some work.
 
+## *DISCLAIMER* 
+***This repository is intended only for personal use while I am in these classes and for posterity. I do not authorize any current or future student to use my awful work. If you do, there is a decent chance they'll quickly determine it was copied from this repo, and both of us could be called in a penalized for your mistake. Do not use as a guide for completing assignments. You have been warned.***
+
 ## CS 160
 This class was a introduction to the department that went over the complete fundamentals of effective programming and problem solving in the CS world. It was taught in Python 3 and had a focus on interfacing with the Cozmo robot, as well as Lego Mindstorms EV3. Requirements for this course were fairly relaxed. The single project that took the most time is found in the /cs160/final/ directory. It was a program using ev3dev2 to tell a robot to sort a hopper full of pills into red and green sub-containers as well as locate, drive to, and dump the appropriate pills into two pill-containers in a 5' diameter circle around the robots starting point.
 
