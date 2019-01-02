@@ -11,14 +11,16 @@ bool arrays_equal(int[], int[], int, int);
 void get_combos(int[], int[]);
 int calculate_extra_points(int[]);
 int index_of(int, int[], int);
-int calculate_move_points(int[]);
+int calculate_move_points(int[], int);
 void roll_dice(int[], int);
 void display_dice(int[]);
 void display_scoreboard(int[], int);
-int determine_winner(int[], int);
+int determine_winner(int[], int, int);
 
 int main()
 {
+	system("cls");
+	system("clear");
 	main_menu();
 	return 0;
 }
@@ -26,8 +28,14 @@ int main()
 // Main menu, in which game customization and run-time takes place.
 void main_menu()
 {
-	cout << "Welcome to Farkle!" << endl << "------------------" << endl << endl;
-	int player_count = HelperLib::getIntInput("How many players?");
+	cout << "Welcome to Farkle!" << endl
+		 << "------------------" << endl
+		 << endl;
+	int player_count = HelperLib::getIntInputInRange("How many players? (2-100)", 2,
+					   100);
+	int score_target =
+		HelperLib::getIntInputInRange("What will you play to? (100-100000; 10000 default)",
+									  100, 100000);
 	int first_winner = -1, first_winner_score = -1, final_winner = -1;
 	bool keep_going = true;
 	int * scores = new int[player_count];
@@ -45,7 +53,7 @@ void main_menu()
 		}
 
 		display_scoreboard(scores, player_count);
-		first_winner = determine_winner(scores, player_count);
+		first_winner = determine_winner(scores, player_count, score_target);
 		first_winner_score = scores[first_winner];
 
 		if (first_winner >= 0)
@@ -54,8 +62,9 @@ void main_menu()
 		}
 	}
 
-	cout << "Player " << first_winner + 1 << "has reached 10,000 points!" << endl;
-	cout << "Everyone gets one more round to try to beat this score!" << endl;
+	cout << "Player " << first_winner + 1 << " has reached " << score_target <<
+		 " points!" << endl;
+	cout << "Everyone gets one more round to try to beat their score!" << endl;
 	cout << "Player " << first_winner + 1 <<
 		 ", your score this round won't count, but you can play anyway!" << endl;
 
@@ -65,10 +74,10 @@ void main_menu()
 	}
 
 	scores[first_winner] = first_winner_score;
-	final_winner = determine_winner(scores, player_count);
+	final_winner = determine_winner(scores, player_count, score_target);
 	display_scoreboard(scores, player_count);
-	cout << "Player " << final_winner << " has won! Congratulations!" << endl <<
-		 endl;
+	cout << "Player " << final_winner << " has won! Congratulations!" << endl
+		 << endl;
 	delete[] scores;
 
 	while (true)
@@ -85,7 +94,8 @@ void main_menu()
 		}
 		else
 		{
-			cout << "**ERROR! Not an option!**" << endl << endl;
+			cout << "**ERROR! Not an option!**" << endl
+				 << endl;
 		}
 	}
 }
@@ -96,17 +106,35 @@ void game_turn(int player, int scores[])
 	bool keep_going = true;
 	int dice[6] = {0, 0, 0, 0, 0, 0}, move[6] = {0, 0, 0, 0, 0, 0};
 	int dice_count = 6, points = 0, move_points = 0, input = 1, move_degree = 0;
-	cout << endl << "Player " << player << "'s turn! Current score: " <<
-		 scores[player - 1]
+	cout << endl
+		 << endl
+		 << "Player " << player << "'s turn!" << endl
+		 << "----------------*" << endl
 		 << endl;
 
 	while (keep_going)
 	{
 		roll_dice(dice, dice_count);
-		display_dice(dice);
-		move_degree = get_move(move, dice, dice_count);
-		move_points = calculate_move_points(move);
+
+		while (true)
+		{
+			cout << "Current score: " << points << endl;
+			display_dice(dice);
+			move_degree = get_move(move, dice, dice_count);
+			move_points = calculate_move_points(move, move_degree);
+
+			if (move_points < 0)
+			{
+				cout << endl << "**ERROR! Use of non-scoring dice!**" << endl << endl;
+			}
+			else
+			{
+				break;
+			}
+		}
+
 		points += move_points;
+		cout << endl;
 
 		if (move_points == 0 || move_degree == 0)
 		{
@@ -114,10 +142,13 @@ void game_turn(int player, int scores[])
 			keep_going = false;
 		}
 
-		if (points >= 500)
+		dice_count -= move_degree;
+
+		if (points >= 500) //|| dice_count < 1)
 		{
 			while (true)
 			{
+				cout << "Current score: " << points << endl;
 				input = HelperLib::getIntInput("Roll again? (0 -> No, 1 -> Yes)");
 
 				if (input == 0 || input == 1)
@@ -134,24 +165,26 @@ void game_turn(int player, int scores[])
 			{
 				keep_going = false;
 			}
+
+			if (dice_count < 1)
+			{
+				dice_count = 6;
+			}
 		}
 
-		dice_count -= move_degree;
-
-		if (dice_count < 1)
-		{
-			keep_going = false;
-		}
+		cout << endl;
 	}
 
 	if (points >= 500)
 	{
 		scores[player - 1] += points;
-		cout << "Good round! You've earned " << points << " points this round!" << endl;
+		cout << endl
+			 << "Good round! You've earned " << points << " points this round!" << endl
+			 << endl;
 	}
 	else
 	{
-		cout << "Farkle! You get no points for the round!" << endl;
+		cout << "Farkle! You only got " << points << " points!" << endl;
 	}
 }
 
@@ -163,15 +196,20 @@ int get_move(int move[], int dice[], int dice_count)
 		move[i] = 0;
 	}
 
-	cout << "Supply 1 to submit a die for scoring, 0 otherwise" << endl;
-	std::string prompt = "Submit as one number, such as 011011:";
-	//std::string input =	HelperLib::getIntInputAsString(prompt);
-	std::string input = to_string(HelperLib::getIntInput(prompt));
+	std::string prompt =
+		"1 to score a die, 0 to keep it;\nsubmit one number, e.g. 011011:";
+	std::string input = HelperLib::getIntInputAsString(prompt);
+	//std::string input = to_string(HelperLib::getIntInput(prompt));
 	int count = 0;
+
+	if (input.length() < dice_count - 1)
+	{
+		input += "000000";
+	}
 
 	for (int i = 0; i < dice_count; i++)
 	{
-		if (input[i] == 1)
+		if (input[i] == '1')
 		{
 			count++;
 			move[dice[i] - 1] += 1;
@@ -212,7 +250,8 @@ void get_combos(int combos[], int move[])
 	{
 		if (move[i] == 6)
 		{
-			combos[4]++;;
+			combos[4]++;
+			;
 		}
 		else if (move[i] == 5)
 		{
@@ -234,18 +273,20 @@ void get_combos(int combos[], int move[])
 }
 
 // Returns the extra possible points of single 1s and 5s in provided move array as int.
-int calculate_extra_points(int move[])
+int calculate_extra_points(int move[], int & used_dice)
 {
 	int result = 0;
 
 	if (move[0] < 3)
 	{
 		result += move[0] * 100;
+		used_dice += move[0];
 	}
 
 	if (move[4] < 3)
 	{
 		result += move[4] * 50;
+		used_dice += move[4];
 	}
 
 	return result;
@@ -265,49 +306,75 @@ int index_of(int item, int arr[], int arr_length)
 	return -1;
 }
 
-// Returns the number of points a given move would provide.
-int calculate_move_points(int move[])
+// Returns the number of points a given move would provide, or -1 if non-scoring dice were played.
+int calculate_move_points(int move[], int move_degree)
 {
 	int combos[5];
 	int straight[6] = {1, 1, 1, 1, 1, 1};
 	get_combos(combos, move);
-	int extra_points = calculate_extra_points(move);
+	int used_dice = 0;
+	int extra_points = calculate_extra_points(move, used_dice);
+	int result;
 
 	if (combos[1] == 2)
 	{
-		return 2500;
+		result = 2500;
+		used_dice += 6;
 	}
 	else if (combos[2] == 1 && combos[0] == 1)
 	{
-		return 1500;
+		result = 1500;
+		used_dice += 6;
 	}
 	else if (combos[0] == 3)
 	{
-		return 1500;
+		result = 1500;
+		used_dice += 6;
 	}
 	else if (arrays_equal(move, straight, 6, 6))
 	{
-		return 1500;
+		result = 1500;
+		used_dice += 6;
 	}
 	else if (combos[4] == 1)
 	{
-		return 3000;
+		result = 3000;
+		used_dice += 6;
 	}
 	else if (combos[3] == 1)
 	{
-		return 2000 + extra_points;
+		result = 2000 + extra_points;
+		used_dice += 5;
 	}
 	else if (combos[2] == 1)
 	{
-		return 1000 + extra_points;
+		result = 1000 + extra_points;
+		used_dice += 4;
 	}
 	else if (combos[1] == 1)
 	{
-		return (index_of(3, move, 6) + 1) * 100 + extra_points;
+		int score = (index_of(3, move, 6) + 1) * 100;
+
+		if (score == 100)
+		{
+			score = 300;
+		}
+
+		result = score + extra_points;
+		used_dice += 3;
 	}
 	else
 	{
-		return extra_points;
+		result = extra_points;
+	}
+
+	if (used_dice < move_degree)
+	{
+		return -1;
+	}
+	else
+	{
+		return result;
 	}
 }
 
@@ -330,8 +397,6 @@ void roll_dice(int dice[], int dice_count)
 // Prints the contents of the passed dice[] array.
 void display_dice(int dice[])
 {
-	cout << "Current dice:" << endl;
-
 	for (int i = 0; i < 6; i++)
 	{
 		if (dice[i] != 0)
@@ -350,7 +415,8 @@ void display_dice(int dice[])
 // Prints the score-board as it stands in scores[] array.
 void display_scoreboard(int scores[], int scores_length)
 {
-	cout << endl << "*------------*----------------*" << endl;
+	cout << endl << endl
+		 << "*------------*----------------*" << endl;
 
 	for (int i = 0; i < scores_length; i++)
 	{
@@ -361,22 +427,27 @@ void display_scoreboard(int scores[], int scores_length)
 			cout << " ";
 		}
 
-		cout << " Points  |" << endl << "*------------*----------------*" << endl;
+		cout << scores[i] << " Points  |" << endl
+			 << "*------------*----------------*" << endl;
 	}
 
 	cout << endl;
 }
 
 // Determines if there is a winner at a given point, and returns their number, or -1 if there is no current winner.
-int determine_winner(int scores[], int scores_length)
+int determine_winner(int scores[], int scores_length, int score_target)
 {
+	int max = -1;
+	int best_player = -1;
+
 	for (int player = 0; player < scores_length; player++)
 	{
-		if (scores[player] >= 10000)
+		if (scores[player] >= score_target && scores[player] > max)
 		{
-			return player;
+			best_player = player;
+			max = scores[best_player];
 		}
 	}
 
-	return -1;
+	return best_player;
 }

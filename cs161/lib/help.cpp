@@ -190,7 +190,7 @@ int HelperLib::getIntInputInRange(std::string prompt, int start, int end, int in
 			keepGoing = false;
 			return input_int;
 		} else {
-			std::cout << "**ERROR! Input is not in allowed range!**" << std::endl;
+			std::cout << "**ERROR! Input is not in range [" << start << "-" << end << "]!**" << std::endl;
 		}
 	}
 

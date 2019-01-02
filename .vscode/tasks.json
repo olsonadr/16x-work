@@ -12,8 +12,9 @@
             "args": [
                 "-g",
                 "${file}",
+                "-lhelp",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/bin/${fileBasenameNoExtension}"
             ],
 
             "group": {
