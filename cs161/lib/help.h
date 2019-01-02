@@ -3,7 +3,7 @@
 #include <iostream>
 namespace HelperLib
 {
-	std::string input(std::string, int);
+	std::string input(std::string, int indentation_level = 0);
 	bool isInt(std::string);
 	bool isFloat(std::string);
 	bool isEven(int);
@@ -12,8 +12,10 @@ namespace HelperLib
 	bool contains(std::string, std::string);
 	std::string toUpper(std::string);
 	std::string toLower(std::string);
-	int getIntInput(std::string, int);
-	float getFloatInput(std::string, int);
+	int getIntInput(std::string, int indentation_level = 0);
+	int getIntInputInRange(std::string, int start, int end, int indentation_level = 0);
+	std::string getIntInputAsString(std::string, int indentation_level = 0);
+	float getFloatInput(std::string, int indentation_level = 0);
 
 	template <typename Head>
 	void print(const Head & first)

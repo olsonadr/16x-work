@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 
-std::string HelperLib::input(std::string prompt, int indentation_level = 0)
+std::string HelperLib::input(std::string prompt, int indentation_level)
 {
 	std::string result;
 	std::string indent = "";
@@ -157,6 +157,7 @@ std::string HelperLib::toLower(std::string input)
 int HelperLib::getIntInput(std::string prompt, int indentation_level)
 {
 	bool keepGoing = true;
+	int input_int = 0;
 
 	while (keepGoing)
 	{
@@ -169,7 +170,6 @@ int HelperLib::getIntInput(std::string prompt, int indentation_level)
 		else
 		{
 			keepGoing = false;
-			int input_int = 0;
 			std::stringstream input_stream;
 			input_stream << input;
 			input_stream >> input_int;
@@ -177,7 +177,46 @@ int HelperLib::getIntInput(std::string prompt, int indentation_level)
 		}
 	}
 
-	return 0;
+	return input_int;
+}
+
+int HelperLib::getIntInputInRange(std::string prompt, int start, int end, int indentation_level) {
+	bool keepGoing = true;
+	int input_int=0;
+
+	while(keepGoing) {
+		input_int = HelperLib::getIntInput(prompt, indentation_level);
+		if( input_int >= start && input_int <= end) {
+			keepGoing = false;
+			return input_int;
+		} else {
+			std::cout << "**ERROR! Input is not in allowed range!**" << std::endl;
+		}
+	}
+
+	return input_int;
+}
+
+std::string HelperLib::getIntInputAsString(std::string prompt, int indentation_level){
+	bool keepGoing = true;
+	std::string input = "";
+	
+	while (keepGoing)
+	{
+		input = HelperLib::input(prompt, indentation_level);
+
+		if (!HelperLib::isInt(input))
+		{
+			std::cout << "**ERROR! Input was not valid integer!**" << std::endl;
+		}
+		else
+		{
+			keepGoing = false;
+			return input;
+		}
+	}
+
+	return input;	
 }
 
 float HelperLib::getFloatInput(std::string prompt, int indentation_level)
@@ -190,7 +229,7 @@ float HelperLib::getFloatInput(std::string prompt, int indentation_level)
 
 		if (!HelperLib::isFloat(input))
 		{
-			std::cout << "**ERROR! Input was not valid integer!**" << std::endl;
+			std::cout << "**ERROR! Input was not valid float!**" << std::endl;
 		}
 		else
 		{
