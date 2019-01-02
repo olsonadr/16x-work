@@ -76,7 +76,7 @@ void main_menu()
 	scores[first_winner] = first_winner_score;
 	final_winner = determine_winner(scores, player_count, score_target);
 	display_scoreboard(scores, player_count);
-	cout << "Player " << final_winner << " has won! Congratulations!" << endl
+	cout << "Player " << final_winner+1 << " has won! Congratulations!" << endl
 		 << endl;
 	delete[] scores;
 
