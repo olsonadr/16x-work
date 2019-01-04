@@ -1,23 +1,22 @@
 #define _USE_MATH_DEFINES
-
 #include <iostream>
 #include <cmath>
 #include <ncurses.h>
-#include <sys/time.h>
+#include <signal.h>
 using namespace std;
 
-float ray(float, float, float, string, int);
+static void finish(int sig); // ncurses function
+float ray(float, float, float, float, string, int, float);
 void raycast_in_fov(float[], float, float, float, float, string, int, float, int);
 bool is_wall(float, float, string, int);
-// int get_predominant_bearing(float);
 void set_steps(float &, float &, float);
-void render_view(float[], string, int, float, float);
-void move(int, float, float &, float &, float, string, int);
+void render_view(float[], string, int, int, float, float, int, int);
+void player_movement(int, float, float &, float &, float, string, int);
 
 int main()
 {
     int term_width = 100;
-    int term_heigh = 30;
+    int term_height = 30;
     float *distances = new float[term_width];
 
     string map = "";
@@ -46,40 +45,61 @@ int main()
     float player_a = 0.0f;
     float movement_distance = 0.1;
     float sprinting_distance = 0.15;
+    float retinal_distance = .1;
     // End Tweakables
 
+    // ncurses intitialization, source: https://invisible-island.net/ncurses/ncurses-intro.html#updating
+    signal(SIGINT, finish); /* arrange interrupts to terminate */
+    initscr();              /* initialize the curses library */
+    keypad(stdscr, TRUE);   /* enable keyboard mapping */
+    nonl();                 /* tell curses not to do NL->CR/NL on output */
+    cbreak();               /* take input chars one at a time, no wait for \n */
+    echo();                 /* echo input - in color */
+    if (has_colors())
+    {
+        start_color();
+        init_pair(1, COLOR_RED, COLOR_BLACK);
+        init_pair(2, COLOR_GREEN, COLOR_BLACK);
+        init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(4, COLOR_BLUE, COLOR_BLACK);
+        init_pair(5, COLOR_CYAN, COLOR_BLACK);
+        init_pair(6, COLOR_MAGENTA, COLOR_BLACK);
+        init_pair(7, COLOR_WHITE, COLOR_BLACK);
+    }
+    // end ncurses initialization
+
     // Game Loop
-    char input;
+    int input;
     bool keep_going = true;
     while (keep_going)
-    {   
+    {
         // User Input
         input = getch();
         switch (input)
         {
         case 'w':
-            move(0, movement_distance, player_x, player_y, player_a, map, map_width);
+            player_movement(0, movement_distance, player_x, player_y, player_a, map, map_width);
             break;
         case 'd':
-            move(1, movement_distance, player_x, player_y, player_a, map, map_width);
+            player_movement(1, movement_distance, player_x, player_y, player_a, map, map_width);
             break;
         case 's':
-            move(2, movement_distance, player_x, player_y, player_a, map, map_width);
+            player_movement(2, movement_distance, player_x, player_y, player_a, map, map_width);
             break;
         case 'a':
-            move(3, movement_distance, player_x, player_y, player_a, map, map_width);
+            player_movement(3, movement_distance, player_x, player_y, player_a, map, map_width);
             break;
         case 'W':
-            move(0, movement_distance, player_x, player_y, player_a, map, map_width);
+            player_movement(0, movement_distance, player_x, player_y, player_a, map, map_width);
             break;
         case 'D':
-            move(1, movement_distance, player_x, player_y, player_a, map, map_width);
+            player_movement(1, movement_distance, player_x, player_y, player_a, map, map_width);
             break;
         case 'S':
-            move(2, movement_distance, player_x, player_y, player_a, map, map_width);
+            player_movement(2, movement_distance, player_x, player_y, player_a, map, map_width);
             break;
         case 'A':
-            move(3, movement_distance, player_x, player_y, player_a, map, map_width);
+            player_movement(3, movement_distance, player_x, player_y, player_a, map, map_width);
             break;
         case 'q':
             keep_going = false;
@@ -87,16 +107,70 @@ int main()
         // End User Input
 
         raycast_in_fov(distances, player_x, player_y, player_a, view_distance, map, map_width, fov, term_width);
-        render_view(distances, map, map_width, player_x, player_y);
+        render_view(distances, map, map_width, map_height, player_x, player_y, term_width, term_height);
     }
     // End Game Loop
-
     delete distances;
     return 0;
 }
 
-void render_view(float distances[], string map, int map_width, float player_x, float player_y)
+// Renders the view to the screen, going column by column
+// distances represents the distances to each object by each ray
+// retinal_distance is the distance to a theoretical retina allowing for
+//    accurate scaling of objects at distance
+void render_view(
+    float distances[], string map,
+    int map_width, int map_height,
+    float player_x, float player_y,
+    int terminal_width, int terminal_height,
+    float retinal_distance)
 {
+    float sky_size, projection_height;
+
+    for (int x = 0; x < terminal_width; x++)
+    {
+        projection_height = terminal_height * (retinal_distance / distances[x]);
+
+        for (int y = 0; y < terminal_height; y++)
+        {
+            if (x < map_width && y < map_height) // In bounds of minimap area
+            {
+                mvaddch(y, x, map[int(y) * map_width + int(x)]);
+            }
+            else
+            {
+                if (distances[x] > 0)
+                {
+                    sky_size = (terminal_height - projection_height) * 2.f / 3.f;
+                    if (y <= sky_size)
+                    {
+                        mvaddch(y, x, ' ');
+                    }
+                    else if (y <= sky_size + projection_height)
+                    {
+                        mvaddch(y, x, '#');
+                    }
+                    else
+                    {
+                        mvaddch(y, x, '.');
+                    }
+                }
+                else // No wall in range, pretend like wall at distance 10 but not displaying anything there.
+                {
+                    projection_height = terminal_height * (retinal_distance / 10.f);
+                    sky_size = (terminal_height - projection_height) * 2.f / 3.f;
+                    if (y <= sky_size + projection_height)
+                    {
+                        mvaddch(y, x, ' ');
+                    }
+                    else
+                    {
+                        mvaddch(y, x, '.');
+                    }
+                }
+            }
+        }
+    }
 }
 
 /*
@@ -148,11 +222,11 @@ float ray(float x, float y,
 }
 
 // Moves the player in a passed direction (0,1,2,3 --> up, right, left down),
-//    unless that move would put them too close to a wall;
-void move(int direction, float distance,
-          float &player_x, float &player_y,
-          float player_angle, string map,
-          int map_width)
+//    unless that player_movement would put them too close to a wall;
+void player_movement(int direction, float distance,
+                     float &player_x, float &player_y,
+                     float player_angle, string map,
+                     int map_width)
 {
     bool valid_move = true;
     float destination_x;
@@ -234,4 +308,11 @@ void set_steps(float &x_step, float &y_step, float angle)
 
     x_step = sin(angle_in_rads);
     y_step = cos(angle_in_rads);
+}
+
+// Function that runs at end of execution or at error.
+static void finish(int sig)
+{
+    endwin();
+    exit(0);
 }
