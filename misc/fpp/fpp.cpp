@@ -7,7 +7,7 @@
 using namespace std;
 
 static void finish(int sig); // ncurses function
-float ray(float, float, float, float, string, int, float);
+float ray(float, float, float, float, string, int, float, float);
 void raycast_in_fov(float[], float, float, float, float, string, int, float, int);
 bool is_wall(float, float, string, int);
 void set_steps(float &, float &, float, float magnitude = 1);
@@ -15,13 +15,14 @@ void render_view(float[], string, int, int, float, float, int, int, float, float
 void player_movement(int, float, float &, float &, float, string, int);
 int get_predominant_bearing(float);
 int get_player_char(float);
+void turn(float, float &);
 
 vector<float> detected_x;
 vector<float> detected_y;
 
 int main()
 {
-    int term_width = 150;
+    int term_width = 160;
     int term_height = 50;
     float *distances = new float[term_width];
 
@@ -70,23 +71,27 @@ int main()
     int map_height = map.length() / map_width;
 
     // Tweakables
-    float fov = 60;
-    float view_distance = 20;
-    float player_x = 1.5;
-    float player_y = 1.5;
+    float fov = 80;
+    float view_distance = 6;
+    float player_x = map_width / 2;
+    float player_y = 4;
     float player_a = 0.0;
     float movement_distance = 0.1;
     float sprinting_distance = .1;
-    float retinal_distance = .6;
+    float retinal_distance = .1;
+    float ray_resolution = .01;
+    float key_turn_amt = .01;
+    float mouse_sensitivity = .01;
     bool display_map = true;
     // End Tweakables
 
     // ncurses intitialization, source: https://invisible-island.net/ncurses/ncurses-intro.html#updating
     signal(SIGINT, finish); /* arrange interrupts to terminate */
     initscr();              /* initialize the curses library */
-    keypad(stdscr, TRUE);   /* enable keyboard mapping */
-    nonl();                 /* tell curses not to do NL->CR/NL on output */
-    cbreak();               /* take input chars one at a time, no wait for \n */
+    resize_term(term_height, term_width);
+    keypad(stdscr, TRUE); /* enable keyboard mapping */
+    nonl();               /* tell curses not to do NL->CR/NL on output */
+    cbreak();             /* take input chars one at a time, no wait for \n */
     nodelay(stdscr, TRUE);
     echo(); /* echo input - in color */
     if (has_colors())
@@ -138,11 +143,19 @@ int main()
         case 'A':
             player_movement(3, movement_distance, player_x, player_y, player_a, map, map_width);
             break;
-        case 'q':
+        case KEY_BACKSPACE:
             keep_going = false;
             break;
         case 'm':
             display_map = !display_map;
+            break;
+        case KEY_LEFT:
+        case 'q':
+            turn(-1 * key_turn_amt, player_a);
+            break;
+        case KEY_RIGHT:
+        case 'e':
+            turn(key_turn_amt, player_a);
             break;
         }
         // End User Input
@@ -172,42 +185,44 @@ void render_view(
 
     for (int x = 0; x < terminal_width; x++)
     {
-        projection_height = terminal_height * (retinal_distance / distances[x]);
+        projection_height = terminal_height * (retinal_distance / distances[x]); //(terminal_height * (1 / pow(distances[x], 1.3)));
 
         for (int y = 0; y < terminal_height; y++)
         {
             if (display_map && x < map_width && y < map_height) // In bounds of minimap area
             {
-                if (x == int(player_x) && y == int(player_y)) // Player location on the map
+                char curr_char = map[((int(y) * map_width) + int(x))];
+                if (x < map_width && y < map_height) // In bounds of minimap area
                 {
-                    mvaddch(y, x, char(get_player_char(player_angle)));
-                }
-                else
-                {
-                    char curr_char = map[((int(y) * map_width) + int(x))];
-                    if (x < map_width && y < map_height) // In bounds of minimap area
+                    if (x == int(player_x) && y == int(player_y)) // Player location on the map
                     {
-                        if (x == int(player_x) && y == int(player_y)) // Player location on the map
+                        mvaddch(y, x, 'X');
+                        //mvaddch(y, x, char(get_player_char(player_angle)));
+                    }
+                    else
+                    {
+                        for (int i = 0; i < detected_x.size(); i++)
                         {
-                            mvaddch(y, x, char(get_player_char(player_angle)));
+                            if (x == int(detected_x[i]) && y == int(detected_y[i]))
+                            {
+                                curr_char = '!';
+                            }
                         }
-                        else
-                        {
-                            mvaddch(y, x, curr_char);
-                        }
+                        mvaddch(y, x, curr_char);
                     }
                 }
             }
             else
             {
-                if (distances[x] > 0)
+                if (distances[x] >= 0)
                 {
+
                     sky_size = (terminal_height - projection_height) * 2.f / 3.f;
                     if (y <= sky_size)
                     {
                         mvaddch(y, x, ' ');
                     }
-                    else if (y <= sky_size + projection_height)
+                    else if (y <= (sky_size + projection_height))
                     {
                         mvaddch(y, x, '#');
                     }
@@ -264,12 +279,13 @@ void raycast_in_fov(float distances[],
 // Sends a single ray with a given x and y step value,
 // Returns the distance from the player to the destination
 //    up to view_distance, or 0 if nothing is found.
+// ray_resolution is how far the ray moves each step (added accuracy at lower vals)
 float ray(float x, float y,
           float x_step, float y_step,
           string map, int map_width,
-          float view_distance)
+          float view_distance, float ray_resolution)
 {
-    for (float i = 0; i < view_distance; i += .1)
+    for (float i = 0; i < view_distance; i += ray_resolution)
     {
         x += x_step;
         y += y_step;
@@ -282,7 +298,21 @@ float ray(float x, float y,
         }
     }
 
-    return 0.0;
+    return -1.0;
+}
+
+// Changes player_angle by the specified amount (change > 0 --> clockwise)
+void turn(float change, float &player_angle)
+{
+    player_angle += change;
+    if (player_angle >= 1)
+    {
+        player_angle -= 1;
+    }
+    else if (player_angle < 0)
+    {
+        player_angle += 1;
+    }
 }
 
 // Moves the player in a passed direction (0,1,2,3 --> up, right, left down),
@@ -314,7 +344,7 @@ void player_movement(int direction, float distance,
 
     destination_x = (destination_x) + player_x;
     destination_y = (destination_y) + player_y;
-    valid_move = !(is_wall(destination_x, destination_y - .01, map, map_width));
+    valid_move = !(is_wall(destination_x, destination_y, map, map_width) || is_wall(destination_x + .25, destination_y + .25, map, map_width) || is_wall(destination_x + .25, destination_y - .25, map, map_width) || is_wall(destination_x - .25, destination_y + .25, map, map_width) || is_wall(destination_x - .25, destination_y - .25, map, map_width));
 
     if (valid_move)
     {
@@ -336,37 +366,37 @@ bool is_wall(float x, float y, string map, int map_width)
     }
 }
 
-int get_player_char(float player_angle)
-{
-    int bearing = get_predominant_bearing(player_angle);
-    switch (bearing)
-    {
-    default: // Upward facing
-        return '↑';
-        break;
-    case 1:
-        return '↗';
-        break;
-    case 2:
-        return '→';
-        break;
-    case 3:
-        return '↘';
-        break;
-    case 4:
-        return '↓';
-        break;
-    case 5:
-        return '↙';
-        break;
-    case 6:
-        return '←';
-        break;
-    case 7:
-        return '↖';
-        break;
-    }
-}
+// int get_player_char(float player_angle)
+// {
+//     int bearing = get_predominant_bearing(player_angle);
+//     switch (bearing)
+//     {
+//     default: // Upward facing
+//         return '↑';
+//         break;
+//     case 1:
+//         return '↗';
+//         break;
+//     case 2:
+//         return '→';
+//         break;
+//     case 3:
+//         return '↘';
+//         break;
+//     case 4:
+//         return '↓';
+//         break;
+//     case 5:
+//         return '↙';
+//         break;
+//     case 6:
+//         return '←';
+//         break;
+//     case 7:
+//         return '↖';
+//         break;
+//     }
+// }
 
 // Returns the predominant bearing of the player
 // (0,1,2,3,4,5,6,7 ==> up,up-right,right,down-right,down,down-left,left,up-left)
