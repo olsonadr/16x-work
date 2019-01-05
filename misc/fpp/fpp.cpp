@@ -8,22 +8,24 @@ using namespace std;
 
 static void finish(int sig); // ncurses function
 float ray(float, float, float, float, string, int, float, float);
-void raycast_in_fov(float[], float, float, float, float, string, int, float, int);
-bool is_wall(float, float, string, int);
+void raycast_in_fov(float[], float, float, float, float, string, int, float, int, float);
+int is_wall(float, float, string, int);
 void set_steps(float &, float &, float, float magnitude = 1);
-void render_view(float[], string, int, int, float, float, int, int, float, float, float, bool);
+void render_view(float[], string, int, int, float, float, int, int, float, float, float, bool, string, bool);
 void player_movement(int, float, float &, float &, float, string, int);
 int get_predominant_bearing(float);
 int get_player_char(float);
 void turn(float, float &);
+void change_tweakable(float &, char, float);
+void set_starting_loc(float &, float &, string, int, int);
 
 vector<float> detected_x;
 vector<float> detected_y;
 
 int main()
 {
-    int term_width = 160;
-    int term_height = 50;
+    int term_width = 130;
+    int term_height = 55;
     float *distances = new float[term_width];
 
     string map = "";
@@ -43,46 +45,72 @@ int main()
     // map += "#####################  ";
     // map += "                       ";
 
-    map += "#########################################################";
+    // map += "#########################################################";
+    // int map_width = map.length();
+    // map += "#.......................................................#";
+    // map += "#.......................................................#";
+    // map += "#.......................................................#";
+    // map += "#.......................................................#";
+    // map += "#.....##############..........###..####.................#";
+    // map += "#.....##.......####...........#.......#.................#";
+    // map += "#.....#.........##............#.......#.................#";
+    // map += "#...............###...........#.......#.................#";
+    // map += "#...............####..........#.......#.................#";
+    // map += "#...............#####.........#.#######.................#";
+    // map += "#...............######.......#..#.......................#";
+    // map += "#............................#..#.......................#";
+    // map += "#......................#######..################........#";
+    // map += "#......................#................................#";
+    // map += "#......................#..######################........#";
+    // map += "#......................#.........#......................#";
+    // map += "#......................#.........#......................#";
+    // map += "#......................#.........#......................#";
+    // map += "#......................###########......................#";
+    // map += "#.......................................................#";
+    // map += "#.......................................................#";
+    // map += "#.......................................................#";
+    // map += "#########################################################";
+    // int map_height = map.length() / map_width;
+
+    map += "###########################";
     int map_width = map.length();
-    map += "#.......................................................#";
-    map += "#.......................................................#";
-    map += "#.......................................................#";
-    map += "#.......................................................#";
-    map += "#.....##############..........###..####.................#";
-    map += "#.....##.......####...........#.......#.................#";
-    map += "#.....#.........##............#.......#.................#";
-    map += "#...............###...........#.......#.................#";
-    map += "#...............####..........#.......#.................#";
-    map += "#...............#####.........#.#######.................#";
-    map += "#...............######.......#..#.......................#";
-    map += "#............................#..#.......................#";
-    map += "#......................#######..################........#";
-    map += "#......................#................................#";
-    map += "#......................#..######################........#";
-    map += "#......................#.........#......................#";
-    map += "#......................#.........#......................#";
-    map += "#......................#.........#......................#";
-    map += "#......................###########......................#";
-    map += "#.......................................................#";
-    map += "#.......................................................#";
-    map += "#.......................................................#";
-    map += "#########################################################";
+    map += "#S#..............###......#";
+    map += "#...############.###.#.##.#";
+    map += "#.###....#####.#.....#.##.#";
+    map += "#.##..##.....#.#######.#..#";
+    map += "#.######.###.#.###.##..#.##";
+    map += "#........##........##.##..#";
+    map += "#####################.###.#";
+    map += "#...........!#........###.#";
+    map += "#.############.##########.#";
+    map += "#.#............#...#......#";
+    map += "#.#.############.#...######";
+    map += "#.#.....####.....#####....#";
+    map += "#.#####...######.......##.#";
+    map += "#.#.###.#...##.#######.##.#";
+    map += "#.#.###.#.#.##.........##.#";
+    map += "#.#.....######.##########.#";
+    map += "#.#######.........#.......#";
+    map += "#.........#######...###.###";
+    map += "###########################";
     int map_height = map.length() / map_width;
 
     // Tweakables
-    float fov = 80;
-    float view_distance = 6;
-    float player_x = map_width / 2;
-    float player_y = 4;
-    float player_a = 0.0;
+    float fov = 90;
+    float view_distance = 3.5;
+    float player_x = 1.5;
+    float player_y = 1.5;
+    set_starting_loc(player_x, player_y, map, map_width, map_height);
+    float player_a = 0.5;
     float movement_distance = 0.1;
-    float sprinting_distance = .1;
-    float retinal_distance = .1;
-    float ray_resolution = .01;
-    float key_turn_amt = .01;
+    float sprinting_distance = .2;
+    float retinal_distance = .5;
+    float ray_resolution = .001;
+    float key_turn_amt = .02;
     float mouse_sensitivity = .01;
+    string tweakables_string;
     bool display_map = true;
+    bool display_bar = true;
     // End Tweakables
 
     // ncurses intitialization, source: https://invisible-island.net/ncurses/ncurses-intro.html#updating
@@ -114,6 +142,7 @@ int main()
     {
         detected_x.clear();
         detected_y.clear();
+        string tweakables_string = "~tweakables~ (c,f)fov=" + to_string(fov) + " (v,g)retinal=" + to_string(retinal_distance) + " (b,h)ray_res=" + to_string(ray_resolution) + " (n,j)view_distance=" + to_string(view_distance) + " ~";
 
         // User Input
         input = getch();
@@ -149,6 +178,9 @@ int main()
         case 'm':
             display_map = !display_map;
             break;
+        case 'k':
+            display_bar = !display_bar;
+            break;
         case KEY_LEFT:
         case 'q':
             turn(-1 * key_turn_amt, player_a);
@@ -157,11 +189,62 @@ int main()
         case 'e':
             turn(key_turn_amt, player_a);
             break;
+        case 'Q':
+            turn(-.25, player_a);
+            break;
+        case 'E':
+            turn(.25, player_a);
+            break;
+        case 'c':
+            change_tweakable(fov, '+', -5);
+            break;
+        case 'f':
+            if (display_bar)
+            {
+                change_tweakable(fov, '+', 5);
+            }
+            break;
+        case 'v':
+            if (display_bar)
+            {
+                change_tweakable(retinal_distance, '+', -.001);
+            }
+            break;
+        case 'g':
+            if (display_bar)
+            {
+                change_tweakable(retinal_distance, '+', .001);
+            }
+            break;
+        case 'b':
+            if (display_bar)
+            {
+                change_tweakable(ray_resolution, '*', .1);
+            }
+            break;
+        case 'h':
+            if (display_bar)
+            {
+                change_tweakable(ray_resolution, '*', 10);
+            }
+            break;
+        case 'n':
+            if (display_bar)
+            {
+                change_tweakable(view_distance, '+', -.5);
+            }
+            break;
+        case 'j':
+            if (display_bar)
+            {
+                change_tweakable(view_distance, '+', .5);
+            }
+            break;
         }
         // End User Input
 
-        raycast_in_fov(distances, player_x, player_y, player_a, view_distance, map, map_width, fov, term_width);
-        render_view(distances, map, map_width, map_height, player_x, player_y, term_width, term_height, retinal_distance, player_a, view_distance, display_map);
+        raycast_in_fov(distances, player_x, player_y, player_a, view_distance, map, map_width, fov, term_width, ray_resolution);
+        render_view(distances, map, map_width, map_height, player_x, player_y, term_width, term_height, retinal_distance, player_a, view_distance, display_map, tweakables_string, display_bar);
     }
     // End Game Loop
     delete distances;
@@ -179,16 +262,18 @@ void render_view(
     float player_x, float player_y,
     int terminal_width, int terminal_height,
     float retinal_distance, float player_angle,
-    float view_distance, bool display_map)
+    float view_distance, bool display_map,
+    string bottom_bar, bool display_bar)
 {
     float sky_size, projection_height;
 
-    for (int x = 0; x < terminal_width; x++)
+    for (int x = terminal_width - 1; x >= 0; x--)
     {
         projection_height = terminal_height * (retinal_distance / distances[x]); //(terminal_height * (1 / pow(distances[x], 1.3)));
 
         for (int y = 0; y < terminal_height; y++)
         {
+            // Start Minimap
             if (display_map && x < map_width && y < map_height) // In bounds of minimap area
             {
                 char curr_char = map[((int(y) * map_width) + int(x))];
@@ -201,17 +286,26 @@ void render_view(
                     }
                     else
                     {
-                        for (int i = 0; i < detected_x.size(); i++)
-                        {
-                            if (x == int(detected_x[i]) && y == int(detected_y[i]))
-                            {
-                                curr_char = '!';
-                            }
-                        }
+                        // // Visualizing field of view:
+                        // for (int i = 0; i < detected_x.size(); i++)
+                        // {
+                        //     if (x == int(detected_x[i]) && y == int(detected_y[i]))
+                        //     {
+                        //         curr_char = '!';
+                        //     }
+                        // }
                         mvaddch(y, x, curr_char);
                     }
                 }
             }
+            // End Minimap
+            // Start Bottom Bar
+            else if (display_bar && x == 0 && y == terminal_height - 1)
+            {
+                mvprintw(y, x, bottom_bar.c_str());
+            }
+            // End Bottom Bar
+            // Start View
             else
             {
                 if (distances[x] >= 0)
@@ -224,16 +318,27 @@ void render_view(
                     }
                     else if (y <= (sky_size + projection_height))
                     {
-                        mvaddch(y, x, '#');
+                        if (distances[x] <= view_distance * 1.f / 2.f)
+                        {
+                            mvaddch(y, x, '#');
+                        }
+                        else if (distances[x] <= view_distance * 3.f / 4.f)
+                        {
+                            mvaddch(y, x, '%');
+                        }
+                        else
+                        {
+                            mvaddch(y, x, '*');
+                        }
                     }
                     else
                     {
                         mvaddch(y, x, '.');
                     }
                 }
-                else // No wall in range, pretend like wall at distance 10 but not displaying anything there.
+                else // No wall in range, pretend like wall at distance view_distance but not displaying anything there.
                 {
-                    projection_height = terminal_height * (retinal_distance / view_distance);
+                    projection_height = terminal_height * (retinal_distance / (view_distance + .1));
                     sky_size = (terminal_height - projection_height) * 2.f / 3.f;
                     if (y <= sky_size + projection_height)
                     {
@@ -245,6 +350,7 @@ void render_view(
                     }
                 }
             }
+            // End View
         }
     }
     refresh();
@@ -260,18 +366,19 @@ void raycast_in_fov(float distances[],
                     float player_x, float player_y,
                     float player_angle, float view_distance,
                     string map, int map_width,
-                    float fov, int resolution)
+                    float fov, int screen_resolution,
+                    float ray_resolution)
 {
     fov = fov / 360.f; // Convert fov to 0-1 float as in angle
     float x_step, y_step;
     float curr_ray_angle = player_angle - (fov / 2);
-    float ray_angle_step = fov / float(resolution);
+    float ray_angle_step = fov / float(screen_resolution);
 
     // Send out rays
-    for (int i = 0; i < resolution; i++)
+    for (int i = 0; i < screen_resolution; i++)
     {
-        set_steps(x_step, y_step, curr_ray_angle, .1);
-        distances[i] = ray(player_x, player_y, x_step, y_step, map, map_width, view_distance);
+        set_steps(x_step, y_step, curr_ray_angle, ray_resolution);
+        distances[i] = ray(player_x, player_y, x_step, y_step, map, map_width, view_distance, ray_resolution);
         curr_ray_angle += ray_angle_step;
     }
 }
@@ -290,7 +397,7 @@ float ray(float x, float y,
         x += x_step;
         y += y_step;
 
-        if (is_wall(int(x), int(y), map, map_width))
+        if (is_wall(int(x), int(y), map, map_width) > 0)
         {
             detected_x.push_back(x);
             detected_y.push_back(y);
@@ -324,27 +431,31 @@ void player_movement(int direction, float distance,
 {
     bool valid_move = true;
     float destination_x;
+    float hitbox_x;
     float destination_y;
+    float hitbox_y;
 
     switch (direction)
     {
     default:
-        set_steps(destination_x, destination_y, player_angle, distance); // Step of dist 1 forward
+        set_steps(destination_x, destination_y, player_angle); // Step of dist 1 forward
         break;
     case 1:
-        set_steps(destination_x, destination_y, (player_angle + .25), distance); // Step of dist 1 right
+        set_steps(destination_x, destination_y, (player_angle + .25)); // Step of dist 1 right
         break;
     case 2:
-        set_steps(destination_x, destination_y, (player_angle + .5), distance); // Step of dist 1 forward
+        set_steps(destination_x, destination_y, (player_angle + .5)); // Step of dist 1 forward
         break;
     case 3:
-        set_steps(destination_x, destination_y, (player_angle + .75), distance); // Step of distance 1 left
+        set_steps(destination_x, destination_y, (player_angle + .75)); // Step of distance 1 left
         break;
     }
 
-    destination_x = (destination_x) + player_x;
-    destination_y = (destination_y) + player_y;
-    valid_move = !(is_wall(destination_x, destination_y, map, map_width) || is_wall(destination_x + .25, destination_y + .25, map, map_width) || is_wall(destination_x + .25, destination_y - .25, map, map_width) || is_wall(destination_x - .25, destination_y + .25, map, map_width) || is_wall(destination_x - .25, destination_y - .25, map, map_width));
+    hitbox_x = (destination_x * distance * 2) + player_x;
+    hitbox_y = (destination_y * distance * 2) + player_y;
+    destination_x = (destination_x * distance) + player_x;
+    destination_y = (destination_y * distance) + player_y;
+    valid_move = is_wall(destination_x, destination_y, map, map_width) == 0 && is_wall(hitbox_x, hitbox_y, map, map_width) == 0;
 
     if (valid_move)
     {
@@ -353,16 +464,21 @@ void player_movement(int direction, float distance,
     }
 }
 
-// Returns whether the given x and y are in a wall tile
-bool is_wall(float x, float y, string map, int map_width)
+// Returns whether the given x and y are in a wall tile or exit
+//    (0 for nothing, 1 for wall (#), 2 for exit (!))
+int is_wall(float x, float y, string map, int map_width)
 {
     if (map[int(y) * map_width + int(x)] == '#')
     {
-        return true;
+        return 1;
+    }
+    else if (map[int(y) * map_width + int(x)] == '!')
+    {
+        return 2;
     }
     else
     {
-        return false;
+        return 0;
     }
 }
 
@@ -458,4 +574,31 @@ static void finish(int sig)
 {
     endwin();
     exit(0);
+}
+
+void change_tweakable(float &tweakable, char operation, float amt)
+{
+    switch (operation)
+    {
+    case '+':
+        tweakable += amt;
+        break;
+    case '*':
+        tweakable *= amt;
+    }
+}
+
+void set_starting_loc(float &player_x, float &player_y, string map, int map_width, int map_height)
+{
+    for (int x = 0; x < map_width; x++)
+    {
+        for (int y = 0; y < map_height; y++)
+        {
+            if (map[int(y) * map_width + int(x)] == 'S')
+            {
+                player_x = x + .5;
+                player_y = y + .5;
+            }
+        }
+    }
 }
