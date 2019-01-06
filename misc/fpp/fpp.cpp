@@ -19,12 +19,12 @@ void turn(float, float &);
 void change_tweakable(float &, char, float);
 void set_starting_loc(float &, float &, string, int, int);
 
-vector<float> detected_x;
-vector<float> detected_y;
+// vector<float> detected_x;
+// vector<float> detected_y;
 
 int main()
 {
-    int term_width = 130;
+    int term_width = 120;
     int term_height = 55;
     float *distances = new float[term_width];
 
@@ -117,6 +117,8 @@ int main()
     signal(SIGINT, finish); /* arrange interrupts to terminate */
     initscr();              /* initialize the curses library */
     resize_term(term_height, term_width);
+    mousemask(ALL_MOUSE_EVENTS | REPORT_MOUSE_POSITION, NULL);
+    printf("\033[?1003h\n");
     keypad(stdscr, TRUE); /* enable keyboard mapping */
     nonl();               /* tell curses not to do NL->CR/NL on output */
     cbreak();             /* take input chars one at a time, no wait for \n */
@@ -138,10 +140,13 @@ int main()
     // Game Loop
     int input;
     bool keep_going = true;
+    float mouse_last = 0;
+    char buffer[512];
+    size_t max_size = sizeof(buffer);
     while (keep_going)
     {
-        detected_x.clear();
-        detected_y.clear();
+        // detected_x.clear();
+        // detected_y.clear();
         string tweakables_string = "~tweakables~ (c,f)fov=" + to_string(fov) + " (v,g)retinal=" + to_string(retinal_distance) + " (b,h)ray_res=" + to_string(ray_resolution) + " (n,j)view_distance=" + to_string(view_distance) + " ~";
 
         // User Input
@@ -240,13 +245,25 @@ int main()
                 change_tweakable(view_distance, '+', .5);
             }
             break;
+        case KEY_MOUSE:
+            MEVENT event;
+            if (getmouse(&event) == OK)
+            {
+                snprintf(buffer, max_size, "Mouse at row=%d, column=%d bstate=0x%08lx",
+                         event.y, event.x, event.bstate);
+            }
+            else
+            {
+                snprintf(buffer, max_size, "Got bad mouse event.");
+            }
+            break;
         }
         // End User Input
 
         raycast_in_fov(distances, player_x, player_y, player_a, view_distance, map, map_width, fov, term_width, ray_resolution);
         render_view(distances, map, map_width, map_height, player_x, player_y, term_width, term_height, retinal_distance, player_a, view_distance, display_map, tweakables_string, display_bar);
     }
-    // End Game Loop
+    // End Game Loops
     delete distances;
     finish(SIGINT);
     return 0;
@@ -269,7 +286,20 @@ void render_view(
 
     for (int x = terminal_width - 1; x >= 0; x--)
     {
-        projection_height = terminal_height * (retinal_distance / distances[x]); //(terminal_height * (1 / pow(distances[x], 1.3)));
+
+        float distance_at_x = distances[x];
+        // if (distance_at_x >= 1)
+        // {
+            projection_height = terminal_height * (retinal_distance / distance_at_x); //(terminal_height * (1 / pow(distances[x], 1.3)));
+        // }
+        // else
+        // {
+        //     if (distances[x] > distances[x - 1] && distances[x] > distances[x + 1])
+        //     {
+        //         distance_at_x = (distances[x - 1] + distances[x + 1]) / 2;
+        //     }
+        //     projection_height = terminal_height * (retinal_distance / distance_at_x);
+        // }
 
         for (int y = 0; y < terminal_height; y++)
         {
@@ -338,7 +368,7 @@ void render_view(
                 }
                 else // No wall in range, pretend like wall at distance view_distance but not displaying anything there.
                 {
-                    projection_height = terminal_height * (retinal_distance / (view_distance + .1));
+                    projection_height = terminal_height * (retinal_distance / (view_distance + 1));
                     sky_size = (terminal_height - projection_height) * 2.f / 3.f;
                     if (y <= sky_size + projection_height)
                     {
@@ -392,15 +422,18 @@ float ray(float x, float y,
           string map, int map_width,
           float view_distance, float ray_resolution)
 {
-    for (float i = 0; i < view_distance; i += ray_resolution)
+    for (float i = ray_resolution; i < view_distance; i += ray_resolution)
     {
+        float init_x = x;
+        float init_y = y;
         x += x_step;
         y += y_step;
 
         if (is_wall(int(x), int(y), map, map_width) > 0)
         {
-            detected_x.push_back(x);
-            detected_y.push_back(y);
+            // detected_x.push_back(x);
+            // detected_y.push_back(y);
+            
             return i;
         }
     }
