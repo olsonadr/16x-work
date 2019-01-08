@@ -1,6 +1,7 @@
 #ifndef HELP_H
 #define HELP_H
 #include <iostream>
+
 namespace HelperLib
 {
 	std::string input(std::string, int indentation_level = 0);
@@ -8,7 +9,7 @@ namespace HelperLib
 	bool isFloat(std::string);
 	bool isEven(int);
 	bool isOdd(int);
-	bool equalsF(float, float, float);
+	bool floatsEqual(float, float, float);
 	bool contains(std::string, std::string);
 	std::string toUpper(std::string);
 	std::string toLower(std::string);
@@ -17,12 +18,14 @@ namespace HelperLib
 	std::string getIntInputAsString(std::string, int indentation_level = 0);
 	float getFloatInput(std::string, int indentation_level = 0);
 
+	// Prints the final argument and sends std::endl:
 	template <typename Head>
 	void print(const Head & first)
 	{
 		std::cout << first << std::endl;
 	}
-	
+	// Prints the first argument of the function to cout
+	// 		and recursively prints the remaining arguments.
 	template <typename Head, typename... Tail>
 	void print(const Head & first, const Tail & ... args)
 	{
