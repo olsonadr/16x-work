@@ -1,5 +1,5 @@
 /*
-**  Program:	   econdata.hpp - Title
+**  Program:	   econdata.hpp - Economic data viewer header file.
 **  Author:		   Nick Olson
 **  Date:		   01/07/2019
 **  Description:   Header file for the econdata program. This defines the structures of
@@ -14,7 +14,9 @@
 // string for getline() functionality in file-reading
 #include <string>
 // help.h for my HelperLib library of helpful methods
-#include "help.h"
+#include "help.hpp"
+// algorithm for sort method
+#include <algorithm>
 
 
 // Allocates an array of a specified number of states.
@@ -46,17 +48,17 @@ bool compare_county_employment(struct county, struct county);
 // Compares two states by their median income.
 bool compare_county_income(struct county, struct county);
 // Displays all the data about a specific state struct.
-void display_state_data(struct state);
+void display_state_data(struct state, int indentation_level = 0);
 // Displays all the data about a specific county struct.
-void display_county_data(struct county);
+void display_county_data(struct county, int indentation_level = 0);
 // Finds and returns the first state containing given substring.
 struct state search_for_state(struct state *, int, std::string);
 // Finds and returns the first county containing given substring.
 struct county search_for_county(struct state, std::string);
 // Prints the names of all states to cout, one per line.
-void display_states(struct state *, int);
+void display_states(struct state *, int, int indentation_level = 0);
 // Prints the names of all counties in a state to cout, one per line.
-void display_counties(struct state, int);
+void display_counties(struct state, int indentation_level = 0);
 
 // Holds all the relevent data that each county has.
 struct county

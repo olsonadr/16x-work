@@ -1,5 +1,5 @@
 /*
-**  Program:	   explore_econdata.cpp - Title
+**  Program:	   explore_econdata.cpp - Economic data viewer interface file.
 **  Author:		   Nick Olson
 **  Date:		   01/07/2019
 **  Description:   This is the main file of the econdata program, which reads a economic
@@ -36,7 +36,6 @@ int main(int argc, char * argv[])
 {
 	// Vars
 	int num_states = 0, error = 0;
-
 	// Open file
 	std::ifstream data_file;
 	error = open_file(argc, argv, data_file);
@@ -56,8 +55,15 @@ int main(int argc, char * argv[])
 
 	struct state * state_list = allocate_states(num_states);
 
+	read_state_data(state_list, num_states, data_file);
+
+	// Launch menu
+	menu_system(state_list, num_states);
+
 	// Cleanup
 	free_state_data(state_list, num_states);
+
 	data_file.close();
+
 	return 0;
 }

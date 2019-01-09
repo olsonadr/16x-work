@@ -1,5 +1,5 @@
 /*
-**  Program:	   econdata.cpp - Economic data viewer function implementations.
+**  Program:	   econdata.cpp - Economic data viewer function implementation file.
 **  Author:		   Nick Olson
 **  Date:		   01/07/2019
 **  Description:   This program implements functions that read data from a user-provided
@@ -131,10 +131,17 @@ void read_state_data(
 
 	for (int index = 0; index < num_states; index++)
 	{
-		data_file >> name >> unemployed_2007
-				  >> unemployed_2015 >> med_income
+		data_file >> name
+				  >> unemployed_2007
+				  >> unemployed_2015
+				  >> med_income
 				  >> num_counties;
 		county_list = allocate_counties(num_counties);
+		read_county_data(
+			county_list,
+			num_counties,
+			data_file
+		);
 		state_list[index] =
 		{
 			.name = name,
@@ -228,10 +235,10 @@ void free_state_data(
 {
 	for (int index = 0; index < num_states; index++)
 	{
-		delete state_list[index].counties;
+		delete[] state_list[index].county_list;
 	}
 
-	delete state_list;
+	delete[] state_list;
 }
 
 
@@ -249,7 +256,305 @@ void free_state_data(
 void menu_system(
     struct state * state_list,
     int num_states)
-{}
+{
+	int int_input;
+	bool keep_going_main = true, keep_going_counties = true;
+	bool is_sorted_med = false, is_sorted_employ = false;
+	std::system("CLS");
+	std::system("clear");
+
+	while (keep_going_main)
+	{
+		std::cout << "Main Menu:"
+				  << std::endl
+				  << "  (0) List out all loaded states."
+				  << std::endl
+				  << "  (1) Find state with highest median income."
+				  << std::endl
+				  << "  (2) Find state with lowest median income."
+				  << std::endl
+				  << "  (3) Find state with highest unemployment in 2015."
+				  << std::endl
+				  << "  (4) Find state with lowest unemployment in 2015."
+				  << std::endl
+				  << "  (5) Sort states by median household income."
+				  << std::endl
+				  << "  (6) Sort states by change in unemployment from 2007 to 2015."
+				  << std::endl
+				  << "  (7) Search for a specific state to view."
+				  << std::endl
+				  << "  (8) Quit the program."
+				  << std::endl
+				  << "#=~"
+				  << std::endl;
+		int_input = HelperLib::getIntInputInRange("Number of your choice: ", 0, 8, 1);
+		std::system("CLS");
+		std::system("clear");
+		std::cout << "#=~"
+				  << std::endl;
+
+		switch (int_input)
+		{
+			default: // Also int_input == 0
+				display_states(
+					state_list,
+					num_states,
+					1);
+				break;
+
+			case 1:
+				display_state_data(
+					find_state(
+						state_list,
+						num_states,
+						"max",
+						"med_income"
+					), 1);
+				break;
+
+			case 2:
+				display_state_data(
+					find_state(
+						state_list,
+						num_states,
+						"min",
+						"med_income"
+					), 1);
+				break;
+
+			case 3:
+				display_state_data(
+					find_state(
+						state_list,
+						num_states,
+						"min",
+						"unemployed_2015"
+					),
+					1);
+				break;
+
+			case 4:
+				display_state_data(
+					find_state(
+						state_list,
+						num_states,
+						"max",
+						"unemployed_2015"
+					), 1);
+				break;
+
+			case 5:
+
+				// Sort array using compare_state_income for comparisons, but only
+				//	 if the array is not already most recently sorted in this way.
+				//if (!is_sorted_med)
+				//{
+					std::sort(
+						state_list,
+						state_list + num_states,
+						compare_state_income
+					);
+				//}
+
+				is_sorted_med = true;
+				is_sorted_employ = false;
+				display_states(
+					state_list,
+					num_states,
+					1);
+				break;
+
+			case 6:
+
+				// Sort array using compare_state_employment for comparisons, but only
+				//	 if the array is not already most recently sorted in this way.
+				//if (!is_sorted_employ)
+				//{
+					std::sort(
+						state_list,
+						state_list + num_states,
+						compare_state_employment
+					);
+				//}
+
+				is_sorted_med = false;
+				is_sorted_employ = true;
+				display_states(
+					state_list,
+					num_states,
+					1);
+				break;
+
+			case 8:
+				keep_going_main = false;
+				break;
+
+			case 7:
+				std::string keyword = HelperLib::input("Search: ", 1);
+				struct state selected_state = search_for_state(
+												  state_list,
+												  num_states,
+												  keyword
+											  );
+				std::cout << "  Found!"
+						  << std::endl
+						  << "#=~"
+						  << std::endl;
+				display_state_data(
+					selected_state, 1
+				);
+				int_input = HelperLib::getIntInputInRange(
+								"Explore this state's counties? (1, 0)", 0, 1, 1
+							);
+				std::cout << "#=~"
+						  << std::endl;
+
+				if (int_input == 1)
+				{
+					keep_going_counties = true;
+
+					while (keep_going_counties)
+					{
+						std::cout << "  "
+								  << selected_state.name
+								  << "'s Counties:"
+								  << std::endl
+								  << "    (0) List out all counties."
+								  << std::endl
+								  << "    (1) Find county with highest median income."
+								  << std::endl
+								  << "    (2) Find county with lowest median income."
+								  << std::endl
+								  << "    (3) Find county with highest unemployment in 2015."
+								  << std::endl
+								  << "    (4) Find county with lowest unemployment in 2015."
+								  << std::endl
+								  << "    (5) Sort counties by median household income (increasing)."
+								  << std::endl
+								  << "    (6) Sort counties by change in unemployment from 2007 to 2015 (negative to positive)."
+								  << std::endl
+								  << "    (7) Search for a specific county to view."
+								  << std::endl
+								  << "    (8) Quit back to main_menu."
+								  << std::endl
+								  << "#=~"
+								  << std::endl;
+						int_input = HelperLib::getIntInputInRange("Number of your choice: ", 0, 8, 1);
+						std::system("CLS");
+						std::system("clear");
+						std::cout << "#=~"
+								  << std::endl;
+
+						switch (int_input)
+						{
+							default: // Also int_input == 0
+								display_counties(
+									selected_state,	2
+								);
+								break;
+
+							case 1:
+								display_county_data(
+									find_county(
+										selected_state,
+										"max",
+										"med_income"
+									), 2);
+								break;
+
+							case 2:
+								display_county_data(
+									find_county(
+										selected_state,
+										"min",
+										"med_income"
+									), 2);
+								break;
+
+							case 3:
+								display_county_data(
+									find_county(
+										selected_state,
+										"min",
+										"unemployed_2015"
+									), 2);
+								break;
+
+							case 4:
+								display_county_data(
+									find_county(
+										selected_state,
+										"max",
+										"unemployed_2015"
+									), 2);
+								break;
+
+							case 5:
+
+								// Sort array using compare_county_income for comparisons, but only
+								//	 if the array is not already most recently sorted in this way.
+								if (!is_sorted_med)
+								{
+									std::sort(
+										selected_state.county_list,
+										selected_state.county_list + selected_state.num_counties,
+										compare_county_income
+									);
+								}
+
+								is_sorted_med = true;
+								is_sorted_employ = false;
+								display_counties(
+									selected_state, 2
+								);
+								break;
+
+							case 6:
+
+								// Sort array using compare_county_employment for comparisons, but only
+								//	 if the array is not already most recently sorted in this way.
+								if (!is_sorted_employ)
+								{
+									std::sort(
+										selected_state.county_list,
+										selected_state.county_list + selected_state.num_counties,
+										compare_county_employment
+									);
+								}
+
+								is_sorted_med = false;
+								is_sorted_employ = true;
+								display_counties(
+									selected_state, 2
+								);
+								break;
+
+							case 8:
+								keep_going_counties = false;
+								break;
+
+							case 7:
+								std::string keyword = HelperLib::input("Search: ", 2);
+								struct county result = search_for_county(
+														   selected_state,
+														   keyword
+													   );
+								std::cout << "    Found!"
+										  << std::endl
+										  << "#=~"
+										  << std::endl;
+								display_county_data(result, 2);
+								std::cout << "#=~"
+										  << std::endl;
+								break;
+						}
+					}
+
+					break;
+				}
+		}
+	}
+}
 
 
 /*
@@ -269,14 +574,72 @@ void menu_system(
 **							"med_income" or "unemployed_2015".
 **  Return Value:       Returns the state found with the highest/lowest of
 **							the requested type. Leaves all params unchanged.
-**  Pre-Conditions:     state_list in non-empty, unless num_states is 0.
+**  Pre-Conditions:     state_list in non-empty.
 */
 struct state find_state(
     struct state * state_list,
     int num_states,
     std::string search_type,
     std::string field_name)
-{}
+{
+	float min_or_max;
+	int stored_index = 0;
+
+	if (field_name == "med_income")
+	{
+		min_or_max = state_list[0].med_income;
+	}
+	else // "unemployed_2015" was passed or invalid std::string was passed.
+	{
+		min_or_max = state_list[0].unemployed_2015;
+	}
+
+	for (int index = 1; index < num_states; index++)
+	{
+		if (field_name == "med_income")
+		{
+			if (search_type == "min")
+			{
+				if (state_list[index].med_income < state_list[stored_index].med_income)
+				{
+					min_or_max = state_list[index].med_income;
+					stored_index = index;
+				}
+			}
+			else
+			{
+				if (state_list[index].med_income > state_list[stored_index].med_income)
+				{
+					min_or_max = state_list[index].med_income;
+					stored_index = index;
+				}
+			}
+		}
+		else
+		{
+			if (search_type == "min")
+			{
+				if (state_list[index].unemployed_2015 <
+						state_list[stored_index].unemployed_2015)
+				{
+					min_or_max = state_list[index].unemployed_2015;
+					stored_index = index;
+				}
+			}
+			else
+			{
+				if (state_list[index].unemployed_2015 >
+						state_list[stored_index].unemployed_2015)
+				{
+					min_or_max = state_list[index].unemployed_2015;
+					stored_index = index;
+				}
+			}
+		}
+	}
+
+	return state_list[stored_index];
+}
 
 
 /*
@@ -304,9 +667,61 @@ struct county find_county(
     std::string field_name)
 {
 	float min_or_max;
-	for (int index = 0; index < state_to_expand.num_counties; index++) {
-		
+	int stored_index = 0;
+	struct county * c_list = state_to_expand.county_list;
+
+	if (field_name == "med_income")
+	{
+		min_or_max = c_list[0].med_income;
 	}
+	else // "unemployed_2015" was passed or invalid std::string was passed.
+	{
+		min_or_max = c_list[0].unemployed_2015;
+	}
+
+	for (int index = 1; index < state_to_expand.num_counties; index++)
+	{
+		if (field_name == "med_income")
+		{
+			if (search_type == "min")
+			{
+				if (c_list[index].med_income < c_list[stored_index].med_income)
+				{
+					min_or_max = c_list[index].med_income;
+					stored_index = index;
+				}
+			}
+			else
+			{
+				if (c_list[index].med_income > c_list[stored_index].med_income)
+				{
+					min_or_max = c_list[index].med_income;
+					stored_index = index;
+				}
+			}
+		}
+		else
+		{
+			if (search_type == "min")
+			{
+				if (c_list[index].unemployed_2015 < c_list[stored_index].unemployed_2015)
+				{
+					min_or_max = c_list[index].unemployed_2015;
+					stored_index = index;
+				}
+			}
+			else
+			{
+				if (c_list[index].unemployed_2015 > c_list[stored_index].unemployed_2015)
+				{
+					min_or_max = c_list[index].unemployed_2015;
+					stored_index = index;
+				}
+			}
+		}
+	}
+
+	return c_list[stored_index];
 }
 
 
@@ -328,8 +743,8 @@ bool compare_state_employment(
     struct state second_state)
 {
 	float first_diff, second_diff;
-	first_diff = first_state.unemployed_2015-first_state.unemployed_2007;
-	second_diff = second_state.unemployed_2015-second_state.unemployed_2007;
+	first_diff = first_state.unemployed_2015 - first_state.unemployed_2007;
+	second_diff = second_state.unemployed_2015 - second_state.unemployed_2007;
 	return first_diff < second_diff;
 }
 
@@ -352,8 +767,6 @@ bool compare_state_income(
 {
 	return first_state.med_income < second_state.med_income;
 }
-
-
 /*
 **  Function:			compare_county_employment
 **  Description:		Returns whether the first county passed has a smaller
@@ -369,15 +782,13 @@ bool compare_state_income(
 */
 bool compare_county_employment(
     struct county first_county,
-    struct state second_county)
+    struct county second_county)
 {
 	float first_diff, second_diff;
-	first_diff = first_county.unemployed_2015-first_county.unemployed_2007;
-	second_diff = second_county.unemployed_2015-second_county.unemployed_2007;
+	first_diff = first_county.unemployed_2015 - first_county.unemployed_2007;
+	second_diff = second_county.unemployed_2015 - second_county.unemployed_2007;
 	return first_diff < second_diff;
 }
-
-
 /*
 **  Function:			compare_county_income
 **  Description:		Returns whether the first county passed has a lower
@@ -397,26 +808,46 @@ bool compare_county_income(
 	return first_county.med_income < second_county.med_income;
 }
 
-
 /*
 **  Function:			display_state_data
 **  Description:		Prints all the stored data about a state to cout.
 **  Parameters:			stuct state state_to_display:
 **							The struct state to display.
+**						int indentation_level:
+**							How indented the data should be (single indent
+**							is two spaces in this context).
 **  Pre-Conditions:     The state is initialized fully.
 */
 void display_state_data(
-    struct state state_to_display)
+    struct state state_to_display,
+    int indentation_level)
 {
-	HelperLib::print("Data of ", state_to_display.name, "State:");
-	HelperLib::print("Median Income:\n",
-					 "  ", state_to_display.med_income, 1);
-	HelperLib::print("Unemployment in 2007:\n",
-					 "  ", state_to_display.unemployed_2007, 1);
-	HelperLib::print("Unemployment in 2015:\n",
-					 "  ", state_to_display.unemployed_2015, 1);
-	HelperLib::print("Number of Counties:\n",
-					 "  ", state_to_display.num_counties, 1);
+	std::string indent = "";
+
+	for (int i = 0; i < indentation_level; i++)
+	{
+		indent += "  ";
+	}
+
+	HelperLib::print(
+		indent + "Data of", state_to_display.name+":"
+	);
+	HelperLib::print(
+		indent + "  Median Income:\n   ",
+		indent + std::to_string(state_to_display.med_income)
+	);
+	HelperLib::print(
+		indent + "  Unemployment in 2007:\n   ",
+		indent + std::to_string(state_to_display.unemployed_2007)
+	);
+	HelperLib::print(
+		indent + "  Unemployment in 2015:\n   ",
+		indent + std::to_string(state_to_display.unemployed_2015)
+	);
+	HelperLib::print(
+		indent + "  Number of Counties:\n   ",
+		indent + std::to_string(state_to_display.num_counties)
+	);
 	std::cout << "#=~"
 			  << std::endl;
 }
@@ -427,18 +858,40 @@ void display_state_data(
 **  Description:		Prints all the stored data about a county to cout.
 **  Parameters:			stuct county county_to_display:
 **							The struct county to display.
+**						int indentation_level:
+**							How indented the data should be (single indent
+**							is two spaces in this context).
 **  Pre-Conditions:     The county is initialized fully.
 */
+
+
 void display_county_data(
-    struct county county_to_display)
+    struct county county_to_display,
+    int indentation_level
+)
 {
-	HelperLib::print("Data of ", county_to_display.name, "County:");
-	HelperLib::print("Median Income:\n",
-					 "  ", county_to_display.med_income, 1);
-	HelperLib::print("Unemployment in 2007:\n",
-					 "  ", county_to_display.unemployed_2007, 1);
-	HelperLib::print("Unemployment in 2015:\n",
-					 "  ", county_to_display.unemployed_2015, 1);
+	std::string indent = "";
+
+	for (int i = 0; i < indentation_level; i++)
+	{
+		indent += "  ";
+	}
+
+	HelperLib::print(
+		indent + "Data of", county_to_display.name, "County:"
+	);
+	HelperLib::print(
+		indent + "  Median Income:\n   ",
+		indent + std::to_string(county_to_display.med_income)
+	);
+	HelperLib::print(
+		indent + "  Unemployment in 2007:\n   ",
+		indent + std::to_string(county_to_display.unemployed_2007)
+	);
+	HelperLib::print(
+		indent + "  Unemployment in 2015:\n   ",
+		indent + std::to_string(county_to_display.unemployed_2015)
+	);
 	std::cout << "#=~"
 			  << std::endl;
 }
@@ -466,7 +919,12 @@ struct state search_for_state(
 {
 	for (int index = 0; index < num_states; index++)
 	{
-		if (HelperLib::contains(state_list[index].name, search_key))
+		if (
+			HelperLib::contains(
+				HelperLib::toUpper(state_list[index].name),
+				HelperLib::toUpper(search_key)
+			)
+		)
 		{
 			return state_list[index];
 		}
@@ -495,7 +953,12 @@ struct county search_for_county(
 {
 	for (int index = 0; index < state_to_expand.num_counties; index++)
 	{
-		if (HelperLib::contains(state_to_expand.county_list[index].name, search_key))
+		if (
+			HelperLib::contains(
+				HelperLib::toUpper(state_to_expand.county_list[index].name),
+				HelperLib::toUpper(search_key)
+			)
+		)
 		{
 			return state_to_expand.county_list[index];
 		}
@@ -518,14 +981,24 @@ struct county search_for_county(
 */
 void display_states(
     struct state * state_list,
-    int num_states)
+    int num_states,
+    int indentation_level)
 {
-	std::cout << "States Loaded:"
+	std::string indent = "";
+
+	for (int i = 0; i < indentation_level; i++)
+	{
+		indent += "  ";
+	}
+
+	std::cout << indent
+			  << "States Loaded:"
 			  << std::endl;
 
 	for (int index = 0; index < num_states; index++)
 	{
-		std::cout << " ~"
+		std::cout << indent
+				  << "  "
 				  << state_list[index].name
 				  << std::endl;
 	}
@@ -546,16 +1019,26 @@ void display_states(
 **							also initialized.
 */
 void display_counties(
-    struct state state_to_expand)
+    struct state state_to_expand,
+    int indentation_level)
 {
-	std::cout << "Counties of "
+	std::string indent = "";
+
+	for (int i = 0; i < indentation_level; i++)
+	{
+		indent += "  ";
+	}
+
+	std::cout << indent
+			  << "Counties of "
 			  << state_to_expand.name
-			  << " State:"
+			  << ":"
 			  << std::endl;
 
 	for (int index = 0; index < state_to_expand.num_counties; index++)
 	{
-		std::cout << " ~"
+		std::cout << indent
+				  << "  "
 				  << state_to_expand.county_list[index].name
 				  << std::endl;
 	}
