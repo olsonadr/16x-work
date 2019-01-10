@@ -5,7 +5,7 @@
 **  Description:   Runs and prints/returns the results of various functions.
 */
 
-#include "help.hpp" // Header file.
+#include "help.h" // Header file.
 #include <iostream>
 #include <sstream>
 

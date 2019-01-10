@@ -1,11 +1,11 @@
 CC=g++
-EXE_FILE=explore_econdata
-INTERFACE=explore_econdata
-HEADER=econdata
-IMPLEMENTATION=econdata
+EXE_FILE=
+INTERFACE=
+HEADER=
+IMPLEMENTATION=
 LIBRARY=help
 
-all: $(EXE_FILE)
+all: lib$(LIBRARY).so
 
 $(EXE_FILE): lib$(LIBRARY).so $(INTERFACE).cpp $(HEADER).hpp $(IMPLEMENTATION).o
 	$(CC) -std=c++11 -Wl,-z,origin,-rpath=\$$ORIGIN -I. -L. -l$(LIBRARY) $(IMPLEMENTATION).o $(INTERFACE).cpp -o $(EXE_FILE)

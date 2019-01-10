@@ -327,7 +327,7 @@ void menu_system(
 					find_state(
 						state_list,
 						num_states,
-						"min",
+						"max",
 						"unemployed_2015"
 					),
 					1);
@@ -338,7 +338,7 @@ void menu_system(
 					find_state(
 						state_list,
 						num_states,
-						"max",
+						"min",
 						"unemployed_2015"
 					), 1);
 				break;
@@ -347,14 +347,14 @@ void menu_system(
 
 				// Sort array using compare_state_income for comparisons, but only
 				//	 if the array is not already most recently sorted in this way.
-				//if (!is_sorted_med)
-				//{
+				if (!is_sorted_med)
+				{
 					std::sort(
 						state_list,
 						state_list + num_states,
 						compare_state_income
 					);
-				//}
+				}
 
 				is_sorted_med = true;
 				is_sorted_employ = false;
@@ -368,14 +368,14 @@ void menu_system(
 
 				// Sort array using compare_state_employment for comparisons, but only
 				//	 if the array is not already most recently sorted in this way.
-				//if (!is_sorted_employ)
-				//{
+				if (!is_sorted_employ)
+				{
 					std::sort(
 						state_list,
 						state_list + num_states,
 						compare_state_employment
 					);
-				//}
+				}
 
 				is_sorted_med = false;
 				is_sorted_employ = true;
@@ -396,16 +396,28 @@ void menu_system(
 												  num_states,
 												  keyword
 											  );
-				std::cout << "  Found!"
-						  << std::endl
-						  << "#=~"
+				std::cout << "#=~"
 						  << std::endl;
-				display_state_data(
-					selected_state, 1
-				);
-				int_input = HelperLib::getIntInputInRange(
-								"Explore this state's counties? (1, 0)", 0, 1, 1
-							);
+
+				if (selected_state.name == "no_result")
+				{
+					std::cout << "    No state found! Try again!"
+							  << std::endl;
+				}
+				else
+				{
+					std::cout << "  Found!"
+							  << std::endl
+							  << "#=~"
+							  << std::endl;
+					display_state_data(
+						selected_state, 1
+					);
+					int_input = HelperLib::getIntInputInRange(
+									"Explore this state's counties? (1, 0)", 0, 1, 1
+								);
+				}
+
 				std::cout << "#=~"
 						  << std::endl;
 
@@ -539,13 +551,23 @@ void menu_system(
 														   selected_state,
 														   keyword
 													   );
-								std::cout << "    Found!"
-										  << std::endl
-										  << "#=~"
-										  << std::endl;
-								display_county_data(result, 2);
-								std::cout << "#=~"
-										  << std::endl;
+
+								if (result.name == "no_result")
+								{
+									std::cout << "    No county found! Try again!"
+											  << std::endl
+											  << "#=~"
+											  << std::endl;
+								}
+								else
+								{
+									std::cout << "    Found!"
+											  << std::endl
+											  << "#=~"
+											  << std::endl;
+									display_county_data(result, 2);
+								}
+
 								break;
 						}
 					}
@@ -767,6 +789,8 @@ bool compare_state_income(
 {
 	return first_state.med_income < second_state.med_income;
 }
+
+
 /*
 **  Function:			compare_county_employment
 **  Description:		Returns whether the first county passed has a smaller
@@ -789,6 +813,8 @@ bool compare_county_employment(
 	second_diff = second_county.unemployed_2015 - second_county.unemployed_2007;
 	return first_diff < second_diff;
 }
+
+
 /*
 **  Function:			compare_county_income
 **  Description:		Returns whether the first county passed has a lower
@@ -807,6 +833,7 @@ bool compare_county_income(
 {
 	return first_county.med_income < second_county.med_income;
 }
+
 
 /*
 **  Function:			display_state_data
@@ -830,7 +857,7 @@ void display_state_data(
 	}
 
 	HelperLib::print(
-		indent + "Data of", state_to_display.name+":"
+		indent + "Data of", state_to_display.name + ":"
 	);
 	HelperLib::print(
 		indent + "  Median Income:\n   ",
@@ -867,8 +894,7 @@ void display_state_data(
 
 void display_county_data(
     struct county county_to_display,
-    int indentation_level
-)
+    int indentation_level)
 {
 	std::string indent = "";
 
@@ -930,7 +956,9 @@ struct state search_for_state(
 		}
 	}
 
-	return state_list[0];
+	struct state no_result = { .name = "no_result" };
+
+	return no_result;
 }
 
 
@@ -964,7 +992,9 @@ struct county search_for_county(
 		}
 	}
 
-	return state_to_expand.county_list[0];
+	struct county no_result = { .name = "no_result" };
+
+	return no_result;
 }
 
 

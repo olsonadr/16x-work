@@ -1,0 +1,4 @@
+g++ -fPIC <lib_name>.cpp -c
+g++ -fPIC -shared <lib_name>.o -o lib<lib_name>.so
+sudo cp lib<lib_name>.so /usr/lib/
+g++ -I. -L. -l<lib_name> <program_using_lib_name>.cpp -o <program_using_lib_name>
