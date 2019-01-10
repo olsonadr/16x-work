@@ -1,32 +1,34 @@
 /*
 **  Program:	   help.cpp - Helper Library
-**  Author:		   Nick Olson
-**  Date:		   12/26/2018
+**  Author:	   Nick Olson
+**  Date:	   12/26/2018
 **  Description:   Runs and prints/returns the results of various functions.
 */
 
-#include "help.hpp" // Header file.
+
+#include "help.hpp"
 #include <iostream>
 #include <sstream>
 
+
 /*
- *  Function:			HelperLib::input
- *  Description:		Prompts the user for input using cout at a given
- * 							indentation level, using 2 spaces as an indent,
- * 							and takes user input from cin as a string,
- * 							accepting anything.
- *  Parameters:			std::string prompt:
- * 							The desired prompt for the user. If the prompt
- * 							ends in a space, the cin occurs at the end of
- * 							that terminal line, else, the cin takes place
- * 							on the next line after a ">> " marker.
- * 						int indentation_level:
- * 							The desired level of indentation for the prompt
- * 							and cin call. For example, indentation_level = 1
- * 							would result in a prompt of "  <prompt-value>".
- *  Returns:			The users input response as a std::string object.
- *  Pre-Conditions:		indentation_level >= 1.
- */
+** Function:		HelperLib::input
+** Description:		Prompts the user for input using cout at a given
+**				indentation level, using 2 spaces as an indent,
+**			    and takes user input from cin as a string,
+**			    accepting anything.
+** Parameters		std::string prompt:
+**			    The desired prompt for the user. If the prompt
+**			    ends in a space, the cin occurs at the end of
+**			    that terminal line, else, the cin takes place
+**			    on the next line after a ">> " marker.
+**			int indentation_level:
+**			    The desired level of indentation for the prompt
+**			    and cin call. For example, indentation_level = 1
+**			    would result in a prompt of "  <prompt-value>".
+** Returns:		The users input response as a std::string object.
+** Pre-Conditions:	indentation_level >= 1.
+*/
 std::string HelperLib::input(std::string prompt, int indentation_level)
 {
 	std::string result;
@@ -51,14 +53,14 @@ std::string HelperLib::input(std::string prompt, int indentation_level)
 }
 
 /*
- *  Function:			HelperLib::isInt
- *  Description:		Checks if a given std::string is a valid integer.
- *  Parameters:			std::string input:
- * 							The std::string to be checked.
- *  Returns:			Whether the input can represent a valid integer
- * 							(and so can be cast to int) as a bool.
- * 							true --> input is an int, false --> it isn't.
- */
+** Function:		HelperLib::isInt
+** Description:		Checks if a given std::string is a valid integer.
+** Parameters		std::string input:
+**			    The std::string to be checked.
+** Returns:		Whether the input can represent a valid integer
+**			    (and so can be cast to int) as a bool.
+**			    true --> input is an int, false --> it isn't.
+*/
 bool HelperLib::isInt(std::string input)
 {
 	for (int i = 0; i < input.length(); i++)
@@ -72,15 +74,16 @@ bool HelperLib::isInt(std::string input)
 	return true;
 }
 
+
 /*
- *  Function:			HelperLib::isFloat
- *  Description:		Checks if a given std::string is a valid float.
- *  Parameters:			std::string input:
- * 							The std::string to be checked.
- *  Returns:			Whether the input can represent a valid float
- * 							(and so can be cast to float) as a bool.
- * 							true --> input is a float, false --> it isn't.
- */
+** Function:		HelperLib::isFloat
+** Description:		Checks if a given std::string is a valid float.
+** Parameters		std::string input:
+**			    The std::string to be checked.
+** Returns:		Whether the input can represent a valid float
+**			    (and so can be cast to float) as a bool.
+**			    true --> input is a float, false --> it isn't.
+*/
 bool HelperLib::isFloat(std::string input)
 {
 	int count = 0;
@@ -101,14 +104,15 @@ bool HelperLib::isFloat(std::string input)
 	return true;
 }
 
+
 /*
- *  Function:			HelperLib::isEven
- *  Description:		Checks if a given int is an even value or not.
- *  Parameters:			int num:
- * 							The integer to be checked.
- *  Returns:			Whether the value of num is an even number as
- * 							a bool value (true --> it is, false --> nope).
- */
+** Function:		HelperLib::isEven
+** Description:		Checks if a given int is an even value or not.
+** Parameters:		int num:
+**			    The integer to be checked.
+** Returns:		Whether the value of num is an even number as
+**			    a bool value (true --> it is, false --> nope).
+*/
 bool HelperLib::isEven(int num)
 {
 	if (num % 2 == 0)
@@ -121,14 +125,15 @@ bool HelperLib::isEven(int num)
 	}
 }
 
+
 /*
- *  Function:			HelperLib::isOdd
- *  Description:		Checks if a given int is an odd value or not.
- *  Parameters:			int num:
- * 							The integer to be checked.
- *  Returns:			Whether the value of num is an odd number as
- * 							a bool value (true --> it is, false --> nope).
- */
+** Function:		HelperLib::isOdd
+** Description:		Checks if a given int is an odd value or not.
+** Parameters:		int num:
+**			    The integer to be checked.
+** Returns:		Whether the value of num is an odd number as
+**			    a bool value (true --> it is, false --> nope).
+*/
 bool HelperLib::isOdd(int num)
 {
 	if (num % 2 == 1)
@@ -141,22 +146,23 @@ bool HelperLib::isOdd(int num)
 	}
 }
 
+
 /*
- *  Function:			HelperLib::floatsEqual
- *  Description:		Checks if two float values are "equal" to eachother,
- * 							meaning they are within some level of precision
- * 							of eachother (to avoid errors in using ==).
- *  Parameters:			float num1:
- * 							The first float value of the "equality".
- * 						float num2:
- * 							The second float value of the "equality".
- * 						float precision:
- * 							The level of precision represented as the max
- * 							difference the values may have to be "equal".
- *  Returns:			Whether num1 and num2 are withing the value of
- * 							precision of eachother (or "equal").
- *  Pre-Conditions:		precision >= 0.
- */
+** Function:		HelperLib::floatsEqual
+** Description:		Checks if two float values are "equal" to eachother,
+**			    meaning they are within some level of precision
+**			    of eachother (to avoid errors in using ==).
+** Parameters:		float num1:
+**			    The first float value of the "equality".
+**			float num2:
+**			    The second float value of the "equality".
+**			float precision:
+**			    The level of precision represented as the max
+**			    difference the values may have to be "equal".
+** Returns:		Whether num1 and num2 are withing the value of
+**			    precision of eachother (or "equal").
+** Pre-Conditions:	precision >= 0.
+*/
 bool HelperLib::floatsEqual(float num1, float num2, float precision)
 {
 	float difference = num1 - num2;
@@ -171,17 +177,18 @@ bool HelperLib::floatsEqual(float num1, float num2, float precision)
 	}
 }
 
+
 /*
- *  Function:			HelperLib::contains
- *  Description:		Checks whether a given string contains a given
- * 							substring fully at any point in its length.
- *  Parameters:			std::string sentence:
- * 							The full string in which the method searches.
- * 						std::string substring:
- * 							The substring the method searches for.
- *  Returns:			Whether the complete substring was found within
- * 							sentence, as a bool value.
- */
+** Function:		HelperLib::contains
+** Description:		Checks whether a given string contains a given
+**			    substring fully at any point in its length.
+** Parameters		std::string sentence:
+**			    The full string in which the method searches.
+**			std::string substring:
+**			    The substring the method searches for.
+** Returns:		Whether the complete substring was found within
+**			    sentence, as a bool value.
+*/
 bool HelperLib::contains(std::string sentence, std::string substring)
 {
 	bool flag;
@@ -210,17 +217,18 @@ bool HelperLib::contains(std::string sentence, std::string substring)
 	return false;
 }
 
+
 /*
- *  Function:			HelperLib::toUpper
- *  Description:		Returns a copy of a given std::string where every
- * 							possible char is uppercase.
- *  Parameters:			std::string input:
- * 							The std::string to be modified.
- *  Returns:			A copy of the string (does not modify the original)
- * 							where every lowercase alphabetical character is
- * 							changed to its uppercase equivelant.
- *  Post-Conditions:	input is unmodified.
- */
+** Function:		HelperLib::toUpper
+** Description:		Returns a copy of a given std::string where every
+**			    possible char is uppercase.
+** Parameters		std::string input:
+**			    The std::string to be modified.
+** Returns:		A copy of the string (does not modify the original)
+**			    where every lowercase alphabetical character is
+**			    changed to its uppercase equivelant.
+** Post-Conditions:	input is unmodified.
+*/
 std::string HelperLib::toUpper(std::string input)
 {
 	std::string upper = input;
@@ -236,17 +244,18 @@ std::string HelperLib::toUpper(std::string input)
 	return upper;
 }
 
+
 /*
- *  Function:			HelperLib::toLower
- *  Description:		Returns a copy of a given std::string where every
- * 							possible char is lowercase.
- *  Parameters:			std::string input:
- * 							The std::string to be modified.
- *  Returns:			A copy of the string (does not modify the original)
- * 							where every uppercase alphabetical character is
- * 							changed to its lowercase equivelant.
- *  Post-Conditions:	input is unmodified.
- */
+** Function:		HelperLib::toLower
+** Description:		Returns a copy of a given std::string where every
+**			    possible char is lowercase.
+** Parameters		std::string input:
+**			    The std::string to be modified.
+** Returns:		A copy of the string (does not modify the original)
+**			    where every uppercase alphabetical character is
+**			    changed to its lowercase equivelant.
+** Post-Conditions:	input is unmodified.
+*/
 std::string HelperLib::toLower(std::string input)
 {
 	std::string lower = input;
@@ -262,26 +271,27 @@ std::string HelperLib::toLower(std::string input)
 	return lower;
 }
 
+
 /*
- *  Function:			HelperLib::getIntInput
- *  Description:		Prompts the user for input using cout at a given
- * 							indentation level, using 2 spaces as an indent,
- * 							and takes user input from cin as a string,
- * 							accepting only valid integer inputs, converting
- * 							the input to an integer before returning.
- *  Parameters:			std::string prompt:
- * 							The desired prompt for the user. If the prompt
- * 							ends in a space, the cin occurs at the end of
- * 							that terminal line, else, the cin takes place
- * 							on the next line after a ">> " marker.
- * 						int indentation_level:
- * 							The desired level of indentation for the prompt
- * 							and cin call. For example, indentation_level = 1
- * 							would result in a prompt of "  <prompt-value>".
- *  Returns:			The users input response as a int value, 0 if the
- * 							execution failed at some point.
- *  Pre-Conditions:		indentation_level >= 1.
- */
+** Function:		HelperLib::getIntInput
+** Description:		Prompts the user for input using cout at a given
+**			    indentation level, using 2 spaces as an indent,
+**			    and takes user input from cin as a string,
+**			    accepting only valid integer inputs, converting
+**			    the input to an integer before returning.
+** Parameters		std::string prompt:
+**			    The desired prompt for the user. If the prompt
+**			    ends in a space, the cin occurs at the end of
+**			    that terminal line, else, the cin takes place
+**			    on the next line after a ">> " marker.
+**			int indentation_level:
+**			    The desired level of indentation for the prompt
+**			    and cin call. For example, indentation_level = 1
+**			    would result in a prompt of "  <prompt-value>".
+** Returns:		The users input response as a int value, 0 if the
+**			    execution failed at some point.
+** Pre-Conditions:	indentation_level >= 1.
+*/
 int HelperLib::getIntInput(std::string prompt, int indentation_level)
 {
 	bool keepGoing = true;
@@ -308,72 +318,82 @@ int HelperLib::getIntInput(std::string prompt, int indentation_level)
 	return input_int;
 }
 
+
 /*
- *  Function:			HelperLib::getIntInputInRange
- *  Description:		Prompts the user for input using cout at a given
- * 							indentation level, using 2 spaces as an indent,
- * 							and takes user input from cin as a string,
- * 							accepting only valid integer inputs, converting
- * 							the input to an integer iff the input is also
- * 							within the range given (inclusive)
- *  Parameters:			std::string prompt:
- * 							The desired prompt for the user. If the prompt
- * 							ends in a space, the cin occurs at the end of
- * 							that terminal line, else, the cin takes place
- * 							on the next line after a ">> " marker.
- * 						int start:
- * 							The starting value of the range of valid inputs.
- * 						int end:
- * 							The ending value of the range of valid inputs.
- * 						int indentation_level:
- * 							The desired level of indentation for the prompt
- * 							and cin call. For example, indentation_level = 1
- * 							would result in a prompt of "  <prompt-value>".
- *  Returns:			The users input response as a int value, 0 if the
- * 							execution failed at some point.
- *  Pre-Conditions:		indentation_level >= 1, start <= end.
- */
-int HelperLib::getIntInputInRange(std::string prompt, int start, int end, int indentation_level)
+** Function:		HelperLib::getIntInputInRange
+** Description:		Prompts the user for input using cout at a given
+**			    indentation level, using 2 spaces as an indent,
+**			    and takes user input from cin as a string,
+**			    accepting only valid integer inputs, converting
+**			    the input to an integer iff the input is also
+**			    within the range given (inclusive)
+** Parameters		std::string prompt:
+**			    The desired prompt for the user. If the prompt
+**			    ends in a space, the cin occurs at the end of
+**			    that terminal line, else, the cin takes place
+**			    on the next line after a ">> " marker.
+**			int start:
+**			    The starting value of the range of valid inputs.
+**			int end:
+**			    The ending value of the range of valid inputs.
+**			int indentation_level:
+**			    The desired level of indentation for the prompt
+**			    and cin call. For example, indentation_level = 1
+**			    would result in a prompt of "  <prompt-value>".
+** Returns:		The users input response as a int value, 0 if the
+**			    execution failed at some point.
+** Pre-Conditions:	indentation_level >= 1, start <= end.
+*/
+int HelperLib::getIntInputInRange(std::string prompt, int start, int end,
+                                  int indentation_level)
 {
 	bool keepGoing = true;
-	int input_int=0;
+	int input_int = 0;
 
-	while(keepGoing) {
+	while (keepGoing)
+	{
 		input_int = HelperLib::getIntInput(prompt, indentation_level);
-		if( input_int >= start && input_int <= end) {
+
+		if (input_int >= start && input_int <= end)
+		{
 			keepGoing = false;
 			return input_int;
-		} else {
-			std::cout << "**ERROR! Input is not in range [" << start << "-" << end << "]!**" << std::endl;
+		}
+		else
+		{
+			std::cout << "**ERROR! Input is not in range [" << start << "-" << end << "]!**" <<
+				  std::endl;
 		}
 	}
 
 	return input_int;
 }
 
+
 /*
- *  Function:			HelperLib::getIntInputAsString
- *  Description:		Prompts the user for input using cout at a given
- * 							indentation level, using 2 spaces as an indent,
- * 							and takes user input from cin as a string,
- * 							accepting only valid integer inputs.
- *  Parameters:			std::string prompt:
- * 							The desired prompt for the user. If the prompt
- * 							ends in a space, the cin occurs at the end of
- * 							that terminal line, else, the cin takes place
- * 							on the next line after a ">> " marker.
- * 						int indentation_level:
- * 							The desired level of indentation for the prompt
- * 							and cin call. For example, indentation_level = 1
- * 							would result in a prompt of "  <prompt-value>".
- *  Returns:			The users input response as a string value, 0 if the
- * 							execution failed at some point.
- *  Pre-Conditions:		indentation_level >= 1.
- */
-std::string HelperLib::getIntInputAsString(std::string prompt, int indentation_level){
+** Function:		HelperLib::getIntInputAsString
+** Description:		Prompts the user for input using cout at a given
+**			    indentation level, using 2 spaces as an indent,
+**			    and takes user input from cin as a string,
+**			    accepting only valid integer inputs.
+** Parameters		std::string prompt:
+**			    The desired prompt for the user. If the prompt
+**			    ends in a space, the cin occurs at the end of
+**			    that terminal line, else, the cin takes place
+**			    on the next line after a ">> " marker.
+**			int indentation_level:
+**			    The desired level of indentation for the prompt
+**			    and cin call. For example, indentation_level = 1
+**			    would result in a prompt of "  <prompt-value>".
+** Returns:		The users input response as a string value, 0 if the
+**			    execution failed at some point.
+** Pre-Conditions:	indentation_level >= 1.
+*/
+std::string HelperLib::getIntInputAsString(std::string prompt, int indentation_level)
+{
 	bool keepGoing = true;
 	std::string input = "";
-	
+
 	while (keepGoing)
 	{
 		input = HelperLib::input(prompt, indentation_level);
@@ -389,29 +409,30 @@ std::string HelperLib::getIntInputAsString(std::string prompt, int indentation_l
 		}
 	}
 
-	return input;	
+	return input;
 }
 
+
 /*
- *  Function:			HelperLib::getIntInput
- *  Description:		Prompts the user for input using cout at a given
- * 							indentation level, using 2 spaces as an indent,
- * 							and takes user input from cin as a string,
- * 							accepting only valid float inputs, converting
- * 							the input to a float before returning.
- *  Parameters:			std::string prompt:
- * 							The desired prompt for the user. If the prompt
- * 							ends in a space, the cin occurs at the end of
- * 							that terminal line, else, the cin takes place
- * 							on the next line after a ">> " marker.
- * 						int indentation_level:
- * 							The desired level of indentation for the prompt
- * 							and cin call. For example, indentation_level = 1
- * 							would result in a prompt of "  <prompt-value>".
- *  Returns:			The users input response as a float value, 0 if the
- * 							execution failed at some point.
- *  Pre-Conditions:		indentation_level >= 1.
- */
+** Function:		HelperLib::getIntInput
+** Description:		Prompts the user for input using cout at a given
+**			    indentation level, using 2 spaces as an indent,
+**			    and takes user input from cin as a string,
+**			    accepting only valid float inputs, converting
+**			    the input to a float before returning.
+** Parameters		std::string prompt:
+**			    The desired prompt for the user. If the prompt
+**			    ends in a space, the cin occurs at the end of
+**			    that terminal line, else, the cin takes place
+**			    on the next line after a ">> " marker.
+**			int indentation_level:
+**			    The desired level of indentation for the prompt
+**			    and cin call. For example, indentation_level = 1
+**			    would result in a prompt of "  <prompt-value>".
+** Returns:		The users input response as a float value, 0 if the
+**			    execution failed at some point.
+** Pre-Conditions:	indentation_level >= 1.
+*/
 float HelperLib::getFloatInput(std::string prompt, int indentation_level)
 {
 	bool keepGoing = true;
@@ -438,19 +459,48 @@ float HelperLib::getFloatInput(std::string prompt, int indentation_level)
 	return 0.0;
 }
 
-// This commented code is the code for my print method, which is defiend in
-//		the associated header file "help.h" that should be in this dir.
+
 /*
- *template <typename Head>
- *void HelperLib::print(const Head & first)
- *{
- *    std::cout << first << std::endl;
- *}
- *
- *template <typename Head, typename... Tail>
- *void HelperLib::print(const Head & first, const Tail & ... args)
- *{
- *    std::cout << first;
- *    print(args...);
- *}
- */
+** Function:		displayMenu
+** Description:		Displays a menu read from a file at path at
+**			    the path in the passed std::string.
+** Parameters:		std::string path:
+**			    Path to the file.
+** Return Value:	Returns users selection as line their choice
+**			is on, -1 for a file read error, etc.
+*/
+int displayMenu(std::string path)
+{
+    std::ifstream data_file;
+	data_file.open(argv[1]);
+	if (data_file.fail())
+	{
+		std::cout << "**ERROR! Invalid path to file provided.**"
+			  << std::endl;
+		return 1;
+	}
+	else if (!data_file.is_open())
+	{
+		std::cout << "**ERROR! File reading error, try again.**"
+			  << std::endl;
+		return 2;
+	}
+}
+
+
+// This commented code is the code for my print method, which is defined in
+//	the associated header file "help.h" that should be in this dir.
+/*
+** template <typename Head>
+** void HelperLib::print(const Head & first)
+** {
+** std::cout << first << std::endl;
+** }
+**
+** template <typename Head, typename... Tail>
+** void HelperLib::print(const Head & first, const Tail & ... args)
+** {
+** std::cout << first;
+** print(args...);
+** }
+*/
