@@ -63,7 +63,7 @@ std::string HelperLib::input(std::string prompt, int indentation_level)
 */
 bool HelperLib::isInt(std::string input)
 {
-	for (int i = 0; i < input.length(); i++)
+	for (int i = 0; i < int(input.length()); i++)
 	{
 		if (!(isdigit(input[i])))
 		{
@@ -88,7 +88,7 @@ bool HelperLib::isFloat(std::string input)
 {
 	int count = 0;
 
-	for (int i = 0; i < input.length(); i++)
+	for (int i = 0; i < int(input.length()); i++)
 	{
 		if (input[i] == '.')
 		{
@@ -191,30 +191,25 @@ bool HelperLib::floatsEqual(float num1, float num2, float precision)
 */
 bool HelperLib::contains(std::string sentence, std::string substring)
 {
-	bool flag;
+	bool flag = false;
 
-	for (int outer = 0; outer < sentence.length() - substring.length(); outer++)
+	for (int outer = 0; outer < int(sentence.length()) - int(substring.length()); outer++)
 	{
 		if (sentence[outer] == substring[0])
 		{
 			flag = true;
 
-			for (int inner = 1; inner < substring.length(); inner++)
+			for (int inner = 1; inner < int(substring.length()); inner++)
 			{
 				if (sentence[outer + inner] != substring[inner])
 				{
-					flag = false;
-				}
-
-				if (flag)
-				{
-					return true;
+					return false;
 				}
 			}
 		}
 	}
 
-	return false;
+	return flag;
 }
 
 
@@ -233,7 +228,7 @@ std::string HelperLib::toUpper(std::string input)
 {
 	std::string upper = input;
 
-	for (int i = 0; i < input.length(); i++)
+	for (int i = 0; i < int(input.length()); i++)
 	{
 		if (islower(input[i]))
 		{
@@ -260,7 +255,7 @@ std::string HelperLib::toLower(std::string input)
 {
 	std::string lower = input;
 
-	for (int i = 0; i < input.length(); i++)
+	for (int i = 0; i < int(input.length()); i++)
 	{
 		if (isupper(input[i]))
 		{
@@ -459,32 +454,89 @@ float HelperLib::getFloatInput(std::string prompt, int indentation_level)
 	return 0.0;
 }
 
-
+// The following two functions are commented out becasue they are
+//  nonfunctional and I don't want to work on them more right now.
 /*
 ** Function:		displayMenu
 ** Description:		Displays a menu read from a file at path at
 **			    the path in the passed std::string.
-** Parameters:		std::string path:
-**			    Path to the file.
+** Parameters:		std::string path_to_file:
+**			    Path to the menu file.
+**			int starting_line:
+**			    The line in the file on which to start
+**			    the menu display. Allows for menu to be
+**			    launched from a submenu.
 ** Return Value:	Returns users selection as line their choice
 **			is on, -1 for a file read error, etc.
+** Example file:	"Main menu:" 3
+**			"(0) Option 1" 0
+**			"(1) Option 2" 1
+**			"(2) Sub Menu" 2
+**			"(3) Suboption 1" 0
+**			"(4) Suboption 2" 0
+**			"(5) Option 3" 0
 */
-int displayMenu(std::string path)
+/*
+int HelperLib::menuSystem(std::string path_to_file, int starting_line = 0)
 {
-    std::ifstream data_file;
-	data_file.open(argv[1]);
+	// Open File
+	std::ifstream data_file;
+	data_file.open(path);
+
 	if (data_file.fail())
 	{
 		std::cout << "**ERROR! Invalid path to file provided.**"
 			  << std::endl;
-		return 1;
+		return -1;
 	}
 	else if (!data_file.is_open())
 	{
 		std::cout << "**ERROR! File reading error, try again.**"
 			  << std::endl;
-		return 2;
+		return -1;
 	}
+
+	// Menu Parsing
+	int result = displayMenu(data_file);
+
+	// Cleanup
+	data_file.close();
+}
+*/
+
+/*
+** Function:		displayMenu
+** Description:		Displays a specific menu's header and list of
+**			    options, returning the user's choice.
+** Parameters:		std::ifstream data_file:
+**			    The datafile to read from
+** Return Value:	The integer line number of the users choice
+**			    relative to the current menu.
+** Pre-Conditions:	The ifstream is at the beginning of the line
+**			    with the menu's header tag and number of
+**			    options within.
+** Post-Conditions:	
+** Example file:	"Main menu:" 3
+**			"(0) Option 1" 0
+**			"(1) Option 2" 1
+**			"(2) Sub Menu" 2
+**			"(3) Suboption 1" 0
+**			"(4) Suboption 2" 0
+**			"(5) Option 3" 0
+*/
+/*
+int HelperLib::displayMenu(std::ifstream data_file)
+{
+    int result = 0;
+    std::cout << "#=~" << std::endl;
+*/
+    
+
+
+
+
+
+    std::cout << "#=~" << std::endl;
 }
 
 

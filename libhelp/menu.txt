@@ -1,0 +1,7 @@
+"Main menu:" 3
+"Option 1" 0
+"Option 2" 1
+"Sub Menu" 2
+"Suboption 1" 0
+"Suboption 2" 0
+"Option 3" 0
