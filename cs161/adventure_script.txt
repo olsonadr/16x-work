@@ -1,0 +1,86 @@
+You are a young knight sitting on a park bench in New York City, and you have an adventure ahead of you!
+
+Choice: Would you like to...
+    1. Enjoy the scenery for 5 more minutes.
+    2. Get up and set off!
+
+    1: You wait 5 minutes in the shade. It's so nice out here...
+        Choice: Would you like to...
+            1. Enjoy the scenery for 5 more minutes.
+            2. Get up and set off!
+
+            1: <if 1>Oh, what could 5 more minutes hurt? This is just so relaxing!
+                Choice: Would you like to...
+                    1. Relax for 5 just 5 more minutes.
+                    2. Not move at all for 300 more seconds.
+
+                    1: Yeah that hits the spot! Why should you move anyway!
+                    2: God, why do you have to go out on this adventure? You aren't getting paid or anything...
+                        Choice: (for either preceding option) Would you like to...
+                            1. Let out a sigh of relief.
+
+                            1: You let out a well-deserved sigh. You really deserve this.
+                                Choice: Would you like to...
+                                    1. Take a quick nap. It's not like anyone will bother you!
+                                    2. Stay awake for just a few more minutes first.
+
+                                    1: You lay down for your nap, and the spirit of the park consumes your soul while you slumber!
+                                        GAME OVER! You have found ending 1/7: 'Sleepy Knight' <Exit>
+                                    2: You try your hardest to stay awake but your eye-lids are starting to droop anyway.
+                                        Choice: Do you...
+                                            1. Just let it happen... you can take a quick nap before you go.
+                                            2. Get up and set off on your amazing adventure!
+
+                                            1: <if 1> Everything will be alright... You lay down to sleep, but never awake!
+                                                GAME OVER! You have found ending 1/7: 'Sleepy Knight' <Exit>
+                                            2: <else, continue>
+            2: <else, continue>
+    2: And so the adventure begins! You arise and set down the well-worn path through central park. You suddenly come to a small creek running through the park. There is a rickety bridge spanning the tumultous waters.
+        Choice: To cross the creek you...
+            1. Dive in and swim across!
+            2. Walk across the bridge like a normal person..?
+            3. Walk on the surface of the water!
+
+            1: You dive in like a magnifiscent eagle, but the creek is significantly shallower than you thought... You smash your head against the rocks and die.
+                GAME OVER! You have found ending 2/7: 'Magnifiscent Knight' <Exit>
+            2: You get your booty onto that bridge and run face-first into a terrifying <red>bridge troll</red>! Quick! What do you do?!
+                Choice: Do you...
+                    1. Try to seduce the surprisingly attractive <red>bridge troll</red> (charisma check).
+                    2. Draw your sword and kill the terrifying <red>bridge troll</red> (strength check)!
+
+                    1: You put on your most dashing face and try a couple of pick-up lines, and...
+                        Skill Check: Random number 0-1
+                            <.5: It doesn't work in the slightest... you quickly realize that "yo thicc baby, what that <red>bridge troll</red> do?" isn't the best line... The <red>bridge troll</red> takes pity on you, though, so you're allowed to continue on the path! Score!
+                            >.5: It totally works! You pull out the best you've got, and the <red>bridge troll</red> is woo'd by your advances and is so impressed that it offers to teleport you further along. Score!
+                                Choice: Do you...
+                                    1. Take the offer of teleportation!
+                                    2. Politely refuse and go on foot.
+
+                                    1: <if 1> You steal one last stolen kiss with the <red>bridge troll</red>, brace yourself for the ride, and suddenly appear in the bed chamber of the great and terrible wizard! Quick! What do you do?
+                                        Choice: Do you...
+                                            1. Offer the great and terrible wizard a <green>green flower</green>.
+                                            2. Give up and cry...
+
+                                            1: You don't have a flower though... The wizard takes this as a great insult and incinerates you with a <purple>lighting bolt</purple>!
+                                                GAME OVER! You have found ending 4/7: '<purple>Lightning Bolt</purple>' <Exit>
+                                            2: You weren't ready for this! It's all just so unfair... The wizard takes pity on you, though. You're so pitiful that the wizard just sort of gives you the <yellow>Crown of Kings</yellow>!
+                                                YOU WIN! You have completed your quest! Congratulations! You have found ending 7/7: <yellow>Crown of Kings</yellow>!
+                                    2: <else, continue>
+                    2: You draw your sword and prepare to fight, but you realize you're just a CS nerd and don't know how to use it. You start to notice how heavy your armour is. The <red>bridge troll</red> crushes you in one blow.
+                        GAME OVER! You have found ending 3/7: '<red>Bridge Troll</red>' <Exit>
+            3: You set off like the brilliant knight you are. You hike through the great valleys of New York, across the vast expanses of the endless woods, and set out over the rolling hills of New Jersey. Suddenly, you come across a beautiful <green>green flower</green>!
+                Choice: Would you like to...
+                    1. Take the <green>green flower</green> for your journey!
+                    2. Leave it by the trail for another to find.
+
+                    1: You pick the flower and feel a wave of courage flow through you! Maybe this will come in handy later on... <continue>
+                    2: You leave the flower by the trail for another sorry soul and continue on... <continue>
+                        <for either preceding choice> After your surprisingly refreshing stroll through the rolling hills, you come to a small cottage out in the country-side of East-Russia. An maid is carving an impressive ice-sculpture outside the cottage.
+                            Choice: Do you...
+                                1. Give the maid the <green>green flower</green>.
+                                2. Keep walking, it's YOUR <green>green flower</green> now!
+
+                                1: You give the maid the flower, and she falls instantly in love with you. You get married and spend the rest of your life drinking Diet Sprite while your lovely wife supports you both with her fantastic ice-sculptures. You forget your quest quickly and enjoy the rest of your life.
+                                    GAME OVER! You have found ending 5/7: 'Diet Knight'
+                                2: And so you continue your journey, leaving the maid behind you, and eventually coming to the great mountain range of Thuud. You set out with a band of 6 onto the treacherous slopes. You try to pass through, but after 50 continuous minutes of climbing, you run out of energy and give up to die. You freeze and your body is never found.
+                                    GAME OVER! You have found ending 6/7: <blue>Chilly Knight</blue>

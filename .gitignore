@@ -1,2 +1,5 @@
-cs162/official
-misc/opengl/first-boy/.vs
+cs162/official/*
+misc/opengl/lib/glew-2.1.0/build/*
+misc/opengl/lib/glfw-3.2.1/build/*
+misc/opengl/lib/glm/build/*
+misc/opengl/lib/soil/build/*
