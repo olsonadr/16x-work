@@ -15,7 +15,7 @@ This class is the first official *Intro to Computer Science* course at OSU. It i
 
 
 ## CS 162
-Also taught in C++, seems like CS 161 but slightly more rigorous, so far.
+Also taught in C++, seems like CS 161 but slightly more rigorous, so far. [CS 162 Course Website](http://web.engr.oregonstate.edu/~hessro/teaching/cs162-w19/).
 
 
 ## Contributing
