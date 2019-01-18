@@ -15,7 +15,7 @@ This class is the first official *Intro to Computer Science* course at OSU. It i
 
 
 ## CS 162
-This class is the *Intro to Computer Science II* course at OSU, and is a class I will be starting in the spring term of 2019 (about a week from writing this). It is taught in C/C++, but beyond that, I have no idea what to expect.
+Also taught in C++, seems like CS 161 but slightly more rigorous, so far.
 
 
 ## Contributing
