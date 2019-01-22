@@ -1,5 +1,5 @@
 # CS 16x Work
-16x Work is a repository for all the work I do for my CS 160, CS 161 (skipped, done from home over break), and CS 162 classes at Oregon State University. It is a mixture of lab, personal, and assignment projects that are horribly organized and generally just thrown in folders. CS 160 was taken while I was still using Mac OS for my general work and exclusively using Visual Studio Code for all work. As of CS 161 work, I have begun to use Fedora 29 (after a brief stint of Ubuntu 18.10). I have also started using vim as my primary editor. I still occasionally use VSCode for some work.
+16x Work is a repository for all the projects I've undertaken while taking the CS 160, CS 161 (skipped, done from home over break), and CS 162 classes at Oregon State University. It is a mixture of lab, personal, and assignment projects that are horribly organized and generally just thrown in folders. CS 160 was taken while I was still using Mac OS for my general work and exclusively using Visual Studio Code for all work. As of CS 161 work, I have begun to use Fedora 29 (after a brief stint of Ubuntu 18.10). I have also started using vim as my primary editor. I still occasionally use VSCode for some work.
 
 
 ## *DISCLAIMER* 
@@ -15,7 +15,7 @@ This class is the first official *Intro to Computer Science* course at OSU. It i
 
 
 ## CS 162
-This class is the *Intro to Computer Science II* course at OSU, and is a class I will be starting in the spring term of 2019 (about a week from writing this). It is taught in C/C++, but beyond that, I have no idea what to expect.
+Also taught in C++, seems like CS 161 but slightly more rigorous, so far. [CS 162 Course Website](http://web.engr.oregonstate.edu/~hessro/teaching/cs162-w19/).
 
 
 ## Contributing
