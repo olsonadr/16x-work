@@ -72,14 +72,24 @@ GLFWwindow * setup(
 */
 void cleanup(
     GLFWwindow * window,
-    struct object * object_list)
+    int num_objects,
+    struct object * object_list,
+    GLfloat ** vertex_list,
+    GLfloat ** color_list)
 {
     if (window != nullptr)
     {
         glfwDestroyWindow(window);
     }
 
-    delete object_list;
+    for (int i = 0; i < num_objects; i++)
+    {
+        delete [] color_list[i];
+    }
+
+    delete [] object_list;
+    delete [] vertex_list;
+    delete [] color_list;
     glfwTerminate();
 }
 
@@ -98,7 +108,7 @@ static void key_callback(
     {
         mat4 pos_change = mat4(1.f);
         mat4 dir_change = mat4(1.f);
-	float degrees;
+        float degrees;
 
         if (key == GLFW_KEY_ESCAPE
                 && action == GLFW_PRESS)
@@ -128,34 +138,34 @@ static void key_callback(
                     step_size * vec3((-1.f * (*camera_ptr).direction))
                 ); //* pos_change;
         }
-	else if (key == GLFW_KEY_A
-		&& (action == GLFW_PRESS
-		    || action == GLFW_REPEAT))
-	{
-	    vec3 left = rotate(
-		    radians(90.f),
-		    normal_axis
-		    ) * (*camera_ptr).direction;
+        else if (key == GLFW_KEY_A
+                 && (action == GLFW_PRESS
+                     || action == GLFW_REPEAT))
+        {
+            vec3 left = rotate(
+                            radians(90.f),
+                            normal_axis
+                        ) * (*camera_ptr).direction;
             pos_change =
                 translate(
                     mat4(1.f),
                     step_size * left
                 ); //* pos_change;
-	}	
-	else if (key == GLFW_KEY_D
-		&& (action == GLFW_PRESS
-		    || action == GLFW_REPEAT))
-	{	
-	    vec3 right = rotate(
-		    radians(-90.f),
-		    normal_axis
-		    ) * (*camera_ptr).direction;
+        }
+        else if (key == GLFW_KEY_D
+                 && (action == GLFW_PRESS
+                     || action == GLFW_REPEAT))
+        {
+            vec3 right = rotate(
+                             radians(-90.f),
+                             normal_axis
+                         ) * (*camera_ptr).direction;
             pos_change =
                 translate(
                     mat4(1.f),
                     step_size * right
                 ); //* pos_change;
-	}
+        }
         else if (key == GLFW_KEY_R
                  && action == GLFW_PRESS)
         {
@@ -169,11 +179,15 @@ static void key_callback(
                  && (action == GLFW_PRESS
                      || action == GLFW_REPEAT))
         {
-	    if (mods == GLFW_MOD_SHIFT) {
-		degrees = 90.f;
-	    } else {
-		degrees = 7.f;
-	    }
+            if (mods == GLFW_MOD_SHIFT)
+            {
+                degrees = 90.f;
+            }
+            else
+            {
+                degrees = 7.f;
+            }
+
             dir_change =
                 rotate(
                     radians(degrees),
@@ -184,11 +198,15 @@ static void key_callback(
                  && (action == GLFW_PRESS
                      || action == GLFW_REPEAT))
         {
-	    if (mods == GLFW_MOD_SHIFT) {
-		degrees = -90.f;
-	    } else {
-		degrees = -7.f;
-	    }
+            if (mods == GLFW_MOD_SHIFT)
+            {
+                degrees = -90.f;
+            }
+            else
+            {
+                degrees = -7.f;
+            }
+
             dir_change =
                 rotate(
                     radians(degrees),
@@ -203,17 +221,3 @@ static void key_callback(
             dir_change * (*camera_ptr).direction;
     }
 }
-
-
-/*
-** Returns the mat4 model matrix for an object
-*/
-/*
- *mat4 get_model_mat(
- *        struct object passed_object)
- *{
- *    mat4 translation = translate(
- *            mat4(),
- *            vec3(passed_object.position));
- *}
- */

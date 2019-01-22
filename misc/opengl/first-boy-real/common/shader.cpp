@@ -120,5 +120,7 @@ GLuint LoadShaders(
     glDeleteShader(VertexShaderID);
     glDeleteShader(FragmentShaderID);
 
+    printf("Succesful, returning\n"); 
+
     return ProgramID;
 }

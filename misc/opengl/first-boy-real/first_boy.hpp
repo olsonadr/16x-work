@@ -14,20 +14,19 @@ GLFWwindow * setup(
     int, int, const char *,
     GLuint &, struct object *,
     struct object *, int);
-
 void cleanup(
-    GLFWwindow *, struct object *);
-
+    GLFWwindow *, int,
+    struct object *,
+    GLfloat ** = nullptr,
+    GLfloat ** = nullptr);
 static void key_callback(
     GLFWwindow *, int,
     int, int, int);
 
-mat4 get_model_mat(
-    struct object);
-
-
 struct object
 {
+    std::string name;
     vec4 position;
     vec4 direction;
+    int num_vertices;
 };
