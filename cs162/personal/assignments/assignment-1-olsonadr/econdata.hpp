@@ -1,9 +1,9 @@
 /*
-**  Program:	   econdata.hpp - Economic data viewer header file.
-**  Author:		   Nick Olson
-**  Date:		   01/07/2019
-**  Description:   Header file for the econdata program. This defines the structures of
-**				   the program as well as the prototypes for each function used.
+**  Program:		econdata.hpp - Economic data viewer header file.
+**  Author:		Nick Olson
+**  Date:		01/07/2019
+**  Description:	Header file for the econdata program. This defines the structures of
+**			the program as well as the prototypes for each function used.
 */
 
 

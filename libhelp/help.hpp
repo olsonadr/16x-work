@@ -1,7 +1,6 @@
-#ifndef HELP_H
-#define HELP_H
+#ifndef HELP_HPP
+#define HELP_HPP
 #include <iostream>
-#include <fstream>
 
 namespace HelperLib
 {
@@ -18,7 +17,7 @@ namespace HelperLib
 	int getIntInputInRange(std::string, int start, int end, int indentation_level = 0);
 	std::string getIntInputAsString(std::string, int indentation_level = 0);
 	float getFloatInput(std::string, int indentation_level = 0);
-	int displayMenu(std::string);
+	int getIndexInputOfStringArray(std::string, std::string*, int, bool, int indentation_level = 0);
 
 	// Prints the final argument and sends std::endl:
 	template <typename Head>

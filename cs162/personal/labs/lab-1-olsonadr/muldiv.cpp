@@ -25,7 +25,7 @@ void print_tables(
 		{
 			std::cout << "| ";
 
-			for (int k = 4; k > std::to_string(table[i][j].mul).length(); k--)
+			for (int k = 4; k > int(std::to_string(table[i][j].mul).length()); k--)
 			{
 				std::cout << " ";
 			}

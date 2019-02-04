@@ -37,6 +37,7 @@
         "cstddef": "cpp",
         "cstring": "cpp",
         "numeric": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "iomanip": "cpp"
     }
 }
