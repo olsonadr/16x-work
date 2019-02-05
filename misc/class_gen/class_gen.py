@@ -21,10 +21,11 @@ while True:
     # Include statements
     cpp.write("#include \"{}.hpp\"".format(class_name))
     while True:
-        include = input("Include (with <> or \"\"): ")
-        if include == "":
-            break
-        hpp.write("#include "+include+"\n")
+        while True:
+            include = input("Include (with <> or \"\"): ")
+            if include == "":
+                break
+            hpp.write("#include "+include+"\n")
 
         hpp.write("\nclass "+class_name+"\n{\n  private:\n")
         cpp.write("\n\n")
@@ -179,7 +180,7 @@ while True:
 
             print("")
 
-        hpp.write("}\n\n")
+        hpp.write("};\n\n")
 
     hpp.close()
     cpp.close()
