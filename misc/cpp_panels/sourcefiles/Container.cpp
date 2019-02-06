@@ -9,7 +9,7 @@
 // Constructors + Destructors + Operator Overloads
 Container::Container(int pos_x, int pos_y,
                      int width, int height,
-                     char *type, char *name)
+                     const char *type, const char *name)
     : Element(pos_x, pos_y, type, name),
       members(new Element *[1]),
       n_members(0),

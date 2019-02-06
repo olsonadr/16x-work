@@ -6,7 +6,7 @@
 #include "../headers/Element.hpp"
 
 Element::Element(int pos_x, int pos_y,
-                 char *type, char *name)
+                 const char *type, const char *name)
     : type(type)
 {
     this->has_changed = true;

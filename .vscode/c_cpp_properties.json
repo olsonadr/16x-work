@@ -3,7 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/misc/cpp_panels"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
