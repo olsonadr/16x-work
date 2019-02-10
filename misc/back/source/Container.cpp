@@ -211,9 +211,10 @@ char **Container::merge()
     {
         for (int i = 0; i < this->n_members; i++)
         {
-            if (this->members[i]->has_changed())
+            if (this->members[i]->get_has_changed())
             {
                 must_update = true;
+                this->members[i]->reset_has_changed();
             }
         }
     }
@@ -304,6 +305,6 @@ char **Container::merge()
             }
         }
     }
-
+    this->has_changed = false;
     return this->merged_arr;
 }

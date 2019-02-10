@@ -1,4 +1,4 @@
-cs162/official/*
+cs162/official/*/*/.git
 misc/opengl/lib/glew-2.1.0/build/*
 misc/opengl/lib/glfw-3.2.1/build/*
 misc/opengl/lib/glm/build/*
