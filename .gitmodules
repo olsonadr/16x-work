@@ -1,3 +1,18 @@
 [submodule "cs162/assignments/assignment-1-olsonadr"]
 	path = cs162/assignments/assignment-1-olsonadr
 	url = git@github.com:OSU-CS162-W19/assignment-1-olsonadr.git
+[submodule "cs162/assignments/assignment-2-olsonadr"]
+	path = cs162/assignments/assignment-2-olsonadr
+	url = git@github.com:OSU-CS162-W19/assignment-2-olsonadr.git
+[submodule "cs162/assignments/assignment-3-olsonadr"]
+	path = cs162/assignments/assignment-3-olsonadr
+	url = git@github.com:OSU-CS162-W19/assignment-3-olsonadr.git
+[submodule "cs162/labs/lab-1-olsonadr"]
+	path = cs162/labs/lab-1-olsonadr
+	url = git@github.com:OSU-CS162-W19/lab-1-olsonadr.git
+[submodule "cs162/labs/lab-3-olsonadr"]
+	path = cs162/labs/lab-3-olsonadr
+	url = git@github.com:OSU-CS162-W19/lab-3-olsonadr.git
+[submodule "cs162/labs/lab-4-olsonadr"]
+	path = cs162/labs/lab-4-olsonadr
+	url = git@github.com:OSU-CS162-W19/lab-4-olsonadr.git
