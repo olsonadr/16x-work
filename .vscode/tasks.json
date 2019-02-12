@@ -7,7 +7,7 @@
             "label": "Build",
             "type": "shell",
 
-            "command": "cd ~/cs/cs162/official/assignments/assignment-2-olsonadr/ && make",
+            "command": "cd ~/cs/misc/cpp_panels && make",
 
             "group": {
                 "kind":"build",

@@ -16,3 +16,6 @@
 [submodule "cs162/labs/lab-4-olsonadr"]
 	path = cs162/labs/lab-4-olsonadr
 	url = git@github.com:OSU-CS162-W19/lab-4-olsonadr.git
+[submodule "misc/fpp"]
+	path = misc/fpp
+	url = git@github.com:olsonadr/fpp.git
