@@ -31,3 +31,9 @@
 [submodule "misc/opengl/lib/soil"]
 	path = misc/opengl/lib/soil
 	url = https://github.com/paralin/soil.git
+[submodule "cs162/labs/lab-6-olsonadr"]
+	path = cs162/labs/lab-6-olsonadr
+	url = git@github.com:OSU-CS162-W19/lab-6-olsonadr.git
+[submodule "cs162/labs/lab-7-olsonadr"]
+	path = cs162/labs/lab-7-olsonadr
+	url = git@github.com:OSU-CS162-W19/lab-7-olsonadr.git

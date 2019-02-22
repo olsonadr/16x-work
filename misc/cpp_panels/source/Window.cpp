@@ -4,7 +4,7 @@
  *  that has the ability to display the character buffer of its members.
  */
 
-#include "../headers/Window.hpp"
+#include "Window.hpp"
 
 // Protected
 /*
@@ -12,18 +12,18 @@
  */
 void Window::resize_terminal()
 {
-    char resize_str[26];
+    char resize_str[16];
     sprintf(resize_str,
-            "printf '\e[8;%d;%dt'",
-            this->dim.y+1, this->dim.x); // ANSI sequence, resizes terminal
-    system(resize_str);
+            "\e[8;%d;%dt",
+            this->dim.y, this->dim.x); // ANSI sequence, resizes terminal
+    printf(resize_str);
 }
 
 // Public
-// Destructor
-Window::~Window()
+// Operator Overload
+void Window::operator=(const Window & old_window)
 {
-    system("printf '\e[?25h'");
+    Container::operator=(old_window);
 }
 
 // Methods
@@ -33,30 +33,40 @@ Window::~Window()
 void Window::display()
 {
     merge();
-    system("printf '\e[H'"); // Set cursor to top-left corner
-    for (int row = 0; row < this->dim.y; row++)
-    {
-        for (int col = 0; col < this->dim.x; col++)
-        {
-            std::cout << this->merged_arr[row][col];
-        }
-
-        if (row < this->dim.y - 1)
-        {
-            std::cout << std::endl;
-        }
-    }
+    //printf("\e[H"); // Set cursor to top-left corner
+    printf(merged_arr);
+    //printf("\e[H"); // Set cursor to top-left corner
 }
 
 /*
- * Clears screen, makes the cursor invisible, and resizes the terminal, should
- * be called before displaying at all.
+ * Clears screen, makes the cursor invisible, disables ECHO and resizes the
+ * terminal, should be called before displaying at all.
 */
-void Window::setup()
+void Window::open()
 {
-    system("printf '\e[?25l'"); // ANSI sequence, makes cursor invisible
-    system("printf '\e[2J'"); // ANSI clear of current screen
+    printf("\e[?25l"); // ANSI sequence, makes cursor invisible
     resize_terminal();
+    merge();
+
+    // Disable Echo
+    tcgetattr(0, &this->term_info);
+    this->term_info.c_lflag &= ~ECHO; /* Turn off ECHO */
+    tcsetattr(0, TCSANOW, &this->term_info);
+}
+
+/*
+ * All operations that get terminal ready for user to use it as normal again,
+ * currently makes the cursor visible again and enables ECHO.
+ */
+void Window::close()
+{
+    printf("\e[?25h"); // Make cursor visible
+    printf("\e[2J");   // ANSI clear of current screen
+    printf("\e[H");    // Set cursor to top-left corner
+
+    // Restore Echo
+    this->term_info.c_lflag |= ECHO; /* Turn on ECHO */
+    tcsetattr(0, TCSANOW, &this->term_info);
 }
 
 /*
@@ -67,8 +77,8 @@ void Window::setup()
  */
 void Window::unsafe_clear()
 {
-    system("CLS");            // Windows OS clear
-    system("tput clear");     // Unix terminal clear
-    // system("printf '\e[2J'"); // ANSI clear of current screen
-    system("printf '\e[H'");  // Set cursor to top-left corner
+    system("CLS");        // Windows OS clear
+    system("tput clear"); // Unix terminal clear
+    printf("\e[H");       // Set cursor to top-left corner
+    // printf("\e[2J");     // ANSI clear of current screen
 }
