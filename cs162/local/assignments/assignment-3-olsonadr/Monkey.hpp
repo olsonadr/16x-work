@@ -1,8 +1,8 @@
 /*
- *  Program:		    Monkey.hpp - Monkey Class Header File
- *  Author:		      Nick Olson
- *  Date:		        02/04/19
- *  Description:	  The header file of the Monkey class, lists all include
+ *  Program:		Monkey.hpp - Monkey Class Header File
+ *  Author:		Nick Olson
+ *  Date:		02/04/19
+ *  Description:	The header file of the Monkey class, lists all include
  *                      statements and function prototypes for Monkey class.
  */
 
@@ -15,12 +15,12 @@
 
 class Monkey : public Animal
 {
-public:
-  Monkey(bool is_store_bought = false, std::string name = "George")
-      : Animal(name, "Monkey", (is_store_bought) ? (3 * 365) : (0), 15000, 1, 4, .1) {}
-  
-  // Overriden Accessor
-  int get_revenue(bool is_boom);
+    public:
+        Monkey(bool is_store_bought = false, std::string name = "George")
+            : Animal(name, "Monkey", (is_store_bought) ? (3 * 365) : (0), 15000, 1, 4, .1) {}
+
+        // Misc
+        int boom_rev();
 };
 
 #endif

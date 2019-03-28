@@ -1,0 +1,6 @@
+Set breakpoint at 16 and 20
+Set to watch a and b
+
+gdb points out that at 20, b is unititialized, so passing it to setval and trying to dereference doesn't mean anything, and will segfault.
+
+Therefore, must initialize b as a pointer.

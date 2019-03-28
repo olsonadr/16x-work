@@ -1,0 +1,337 @@
+UI Stuff:
+
+57 wide, 20 tall
+#=======================================================#
+|    ___                         ___ ___   _  __ ___    |
+|   | __|_____ __ _ _ __  ___   / __/ __| / |/ /|_  )   |
+|   | _|(_-< _/ _` | '_ \/ -_) | (__\__ \ | / _ \/ /    |
+|   |___/__|__\__,_| .__/\___|  \___|___/ |_\___/___|   |
+|                  |_|                                  |
+#=======================================================#
+|                                                       |
+|                   ~=# Main Menu #=~                   |
+|                    ...............                    |
+|                                                       |
+|                     -(L)oad Game-                     |
+|                                                       |
+|                      -(O)ptions-                      |
+|                                                       |
+|                    -(I)nformation-                    |
+|                                                       |
+|                     -(Q)uit Game-                     |
+|                                                       |
+#=======================================================#
+
+#=======================================================#
+|                                                       |
+|  +-------------------------------------------------+  |
+|  |                                                 |  |
+|  |                 ~=# Options #=~                 |  |
+|  |                                                 |  |
+#==|                     ---+---                     |==#
+|  |                                                 |  |
+|  |           (0) Show / Hide TA Hitboxes           |  |
+|  |                 current: [xxxx]                 |  |
+|  |                                                 |  |
+|  |         (1) Shape / Size of TA Hitboxes         |  |
+|  |                 current: [xxxx]                 |  |
+|  |                  (rect / plus)                  |  |
+|  |                                                 |  |
+|  |             (Q) Return to Main Menu             |  |
+|  |                                                 |  |
+|  +-------------------------------------------------+  |
+|                                                       |
+#=======================================================#
+
+#=======================================================#
+|                                                       |
+|  +-------------------------------------------------+  |
+|  |                                                 |  |
+|  |                ~=# Load Game #=~                |  |
+|  |                                                 |  |
+#==|                     ---+---                     |==#
+|  |                                                 |  |
+|  |               (0) XXXXXXXXXXX                   |  |
+|  |               (1) XXXXXXXXXXXXXX                |  |
+|  |               (2) XXXXXXXXXXX                   |  |
+|  |               (3) XXXXXXXXXXXXXX                |  |
+|  |               (4) XXXXXXXXXXX                   |  |
+|  |               (5) XXXXXXXXXXXXXX                |  |
+|  |                                                 |  |
+|  |                   Page - X/X                    |  |
+|  |  (,) prev :: (.) next :: (R)efresh :: (Q) back  |  |
+|  +-------------------------------------------------+  |
+|                                                       |
+#=======================================================#
+
+#=======================================================#
+|                                                       |
+|  +-------------------------------------------------+  |
+|  |                                                 |  |
+|  |             ~=# Information 1/4 #=~             |  |
+|  |                                                 |  |
+#==|                     ---+---                     |==#
+|  |                                                 |  |
+|  |                                                 |  |
+|  |   In this game, your goal is to use (W,A,S,D)   |  |
+|  |     guide the intrepid student ['S'] to the     |  |
+|  |      ladder ['^'] at the end of each level      |  |
+|  |          of the maze. climb using (U)!          |  |
+|  |                                                 |  |
+|  |                                                 |  |
+|  |                                                 |  |
+|  |       (,) prev :: (.) next :: (Q) go back       |  |
+|  +-------------------------------------------------+  |
+|                                                       |
+#=======================================================#
+
+#=======================================================#
+|                                                       |
+|  +-------------------------------------------------+  |
+|  |                                                 |  |
+|  |             ~=# Information 2/4 #=~             |  |
+|  |                                                 |  |
+#==|                     ---+---                     |==#
+|  |                                                 |  |
+|  |      While exploring, you'll be collecting      |  |
+|  |  programming skills ['P'] along the way. These  |  |
+|  |  will help you if and when you find the hidden  |  |
+|  |   Instructor ['%'] on the highest tier of the   |  |
+|  |    maze. Unless you have at least *3* skills    |  |
+|  |     when you do, you will fail and restart!     |  |
+|  |                                                 |  |
+|  |                                                 |  |
+|  |       (,) prev :: (.) next :: (Q) go back       |  |
+|  +-------------------------------------------------+  |
+|                                                       |
+#=======================================================#
+
+#=======================================================#
+|                                                       |
+|  +-------------------------------------------------+  |
+|  |                                                 |  |
+|  |             ~=# Information 3/4 #=~             |  |
+|  |                                                 |  |
+#==|                     ---+---                     |==#
+|  |                                                 |  |
+|  |    These programming skills can also be used    |  |
+|  |    on the way to fend off the terrifying TAs    |  |
+|  |     wandering the maze. You can demonstrate     |  |
+|  |       a skill with (P), losing one in the       |  |
+|  |       process, but granting you 10 rounds       |  |
+|  |       of invulnerability against the TAs.       |  |
+|  |                                                 |  |
+|  |                                                 |  |
+|  |    (,) - prev :: (.) - next :: (q) - go back    |  |
+|  +-------------------------------------------------+  |
+|                                                       |
+#=======================================================#
+
+#=======================================================#
+|                                                       |
+|  +-------------------------------------------------+  |
+|  |                                                 |  |
+|  |             ~=# Information 4/4 #=~             |  |
+|  |                                                 |  |
+#==|                     ---+---                     |==#
+|  |                                                 |  |
+|  |    If you have not used one of these skills     |  |
+|  |     moving into any space adjacent to a TA      |  |
+|  |     (excluding diagonal places by default)      |  |
+|  |       you will lose all your held skills        |  |
+|  |        and be sent back to the start of         |  |
+|  |         the current level of the maze.          |  |
+|  |                                                 |  |
+|  |                                                 |  |
+|  |    (,) - prev :: (.) - next :: (q) - go back    |  |
+|  +-------------------------------------------------+  |
+|                                                       |
+#=======================================================#
+
+
+-   -   -                             -   -   -
+  in this game, your goal is to use (w,a,s,d) -
+    guide the intrepid student ['s'] to the   -
+     ladder ['^'] at the end of each level    -
+         of the maze. climb using (u)!        -
+
+-   -   -                             -   -   -
+-----While exploring, you'll be collecting    -
+-programming skills ['P'] along the way. These-
+-will help you if and when you find the hidden-
+--Instructor ['%'] on the highest tier of the -
+---maze. Unless you have at least *3* skills  -
+----when you do, you will fail and restart!   -
+
+-   -   -                             -   -   -
+---These programming skills can also be used  -
+---on the way to fend off the terrifying TAs  -
+----wandering the maze. You can demonstrate   -
+------a skill with (P), losing one in the     -
+----  process, but granting you 10 rounds     -
+------of invulnerability against the TAs.     -
+
+-   -   -                             -   -   -
+---If you have not used one of these skills----
+----moving into any space adjacent to a TA-----
+----(excluding diagonal places by default)-----
+------you will lose all your held skills-------
+-------and be sent back to the start of--------
+--------the current level of the maze.---------
+
+
+
+
+
+Classes:
+
+MazeLocation:
+{
+    public:
+	virtual bool is_occupiable() =0;
+	virtual char get_display_character() =0;
+}
+
+
+Wall, derived from MazeLocation:
+{
+    public:
+	bool is_occupiable() { return false; }
+	char get_display_character() { return '#'; }
+}
+
+
+<stdlib>
+OpenSpace:
+{
+    public:
+	bool is_occuipiable() { return true; }
+	char get_display_character() { return ' '; }
+}
+
+
+MazeLevel:
+{
+
+
+}
+
+
+MazePerson:
+{
+    protected:
+	int x_pos;
+	int y_pos;
+    public:
+	// Virtual
+	virtual char get_move() =0;
+
+	// Non-Virtual
+	int get_x_pos() { return this->x_pos; }
+	int get_y_pos() { return this->y_pos; }
+	void move_to();
+}
+
+
+IntrepidStudent, derived from MazePerson:
+{
+    private:
+	int n_skills;
+	Console * input_console;
+	int maze_w, maze_h;
+    public:
+	constructors
+
+	// From MazePerson
+	char get_move();
+
+	// Unique to IntrepidStudent
+	int get_n_skills() { return this->n_skills; }
+}
+
+
+TA:
+{
+
+
+}
+
+
+Instructor:
+{
+
+
+}
+
+
+Maze:
+{
+
+
+}
+
+
+
+
+
+
+Maze Formatting:
+
+3 19 19
+###################
+#@             #  #
+#              #  #
+#  ##########  #  #
+#  #     #  #  #  #
+#  #     #  #  #  #
+#  #  #  #  #  #  #
+#     #     #  #  #
+#     #     #  #  #
+#  ##########  #  #
+#           #     #
+#           #     #
+################  #
+#                 #
+#                 #
+#  #  #############
+#  #              #
+#  #            ^ #
+###################
+###################
+#@    #     #     #
+#     #     #     #
+####  #  #  ####  #
+#  #  #  #        #
+#  #  #  #        #
+#  #  #  ##########
+#  #           #  #
+#  #           #  #
+#  ####  ####  #  #
+#        #        #
+#        #        #
+##########  #######
+#        #        #
+#        #        #
+#  ####  #######  #
+#     #           #
+#     #         ^ #
+###################
+###################
+#@          #     #
+#           #     #
+#  #######  ####  #
+#  #     #     #  #
+#  #     #     #  #
+#  #  ####  #  #  #
+#  #     #  #     #
+#  #     #  #     #
+#  ####  #  #######
+#  #  #     #     #
+#  #  #     #     #
+#  #  #######  #  #
+#  #           #  #
+#  #           #  #
+#  #  ##########  #
+#     #           #
+#     # %         #
+###################

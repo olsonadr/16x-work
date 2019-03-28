@@ -1,17 +1,18 @@
 /*
  *  Program:		Animal.cpp - Animal Class Implementation File
- *  Author:		    Nick Olson
- *  Date:		    02/04/19
+ *  Author:		Nick Olson
+ *  Date:		02/04/19
  *  Description:	The implementation of the Animal class described in
- *                      Animal.hpp, objects of which represent... 
+ *                      Animal.hpp, objects of which represent...
  */
 
+
 #include "Animal.hpp"
-#include <iostream>
+
 
 /*                                                                                      -
- *  Constructor:   		Animal::Animal
- *  Description:		Parameterized constructor for Animal class, no default values as
+ *  Constructor:	Animal::Animal(...)
+ *  Description:	Parameterized constructor for Animal class, no default values as
  *                          the Animal class should never be constructed. Initializes all
  *                          fields to passed values, checks whether Animal is baby, etc.
  *  Pre-conditions:     No fields have been instantiated.
@@ -25,19 +26,36 @@ Animal::Animal(std::string name, std::string species,
       food_cost_mult(food_cost_mult), revenue_mult(revenue_mult)
 {
     this->is_sick = false;
-    update_baby_status();
+    update_age_group();
 }
 
-Animal::Animal(const Animal &old_animal)
+
+/*                                                                                      -
+ *  Constructor:	Animal::Animal(...)
+ *  Description:	Copy constructor for Animal class. Initializes all fields to vals
+ *			    of the passed old_animal, checks whether Animal is baby, etc.
+ *  Pre-conditions:     No fields have been instantiated.
+ *  Post-conditions:    All fields have been instantiated.
+ */
+Animal::Animal(const Animal & old_animal)
     : name(old_animal.name), species(old_animal.species), age(old_animal.age),
       cost(old_animal.cost), num_babies(old_animal.num_babies),
       food_cost_mult(old_animal.food_cost_mult),
       revenue_mult(old_animal.revenue_mult)
 {
     this->is_sick = old_animal.is_sick;
-    update_baby_status();
+    update_age_group();
 }
 
+
+/*                                                                                      -
+ *  Constructor:	void Animal::operator=(...)
+ *  Description:	Overriden assignment operator for Animal class. Initializes all
+ *			    fields to vals of the passed old_animal, checks whether the
+ *			    Animal is baby, etc.
+ *  Pre-conditions:     No fields have been instantiated.
+ *  Post-conditions:    All fields have been instantiated.
+ */
 void Animal::operator=(const Animal & old_animal)
 {
     this->name = old_animal.name;
@@ -47,17 +65,19 @@ void Animal::operator=(const Animal & old_animal)
     this->food_cost_mult = old_animal.food_cost_mult;
     this->revenue_mult = old_animal.revenue_mult;
     this->is_sick = old_animal.is_sick;
-    update_baby_status();
+    update_age_group();
 }
 
+
 /*                                                                                      -
- *  Function:   		Animal::update_baby_status()
- *  Description:		a
- *  Returns:            _ as a void
+ *  Function:		Animal::update_age_group()
+ *  Description:	Updates the Animal's age_group field with its accurate age-group
+ *			    where Baby represents under 30 days of age, Child represents
+ *			    under 3 years of age, and adult is over 3 years.
  *  Pre-conditions:     All fields have been instantiated.
- *  Post-conditions:    a
+ *  Post-conditions:    The age_group field is accurate to the current age.
  */
-void Animal::update_baby_status()
+void Animal::update_age_group()
 {
     if (this->age < 30)
     {
@@ -73,13 +93,30 @@ void Animal::update_baby_status()
     }
 }
 
+
+/*
+ * Function:		Animal::day_passes()
+ * Description:		Field mutations when a day passes, for all Animals, adds one day
+ *			    to their age and updates age_group.
+ * Pre-Conditions:	All fields instantiated.
+ * Post-Conditions:	Fields are accurate to one day having passed.
+ */
 void Animal::day_passes()
 {
     this->age++;
-    update_baby_status();
+    update_age_group();
 }
 
-// Pre-condition:   age_group is accurate
+
+/*
+ * Function:		Animal::get_revenue()
+ * Description:		Gets how much revenue this Animal produces in a day based on its
+ *			    revenue multiplier and whether or not it is a baby. This does
+ *			    not handle the Monkey bonus from attendance booms.
+ * Return Value:	The amount of revenue it generates in a day.
+ * Pre-Conditions:	All fields instantiated, age_group is accurate to current age.
+ * Post-Conditions:	Revenue has been returned.
+ */
 int Animal::get_revenue()
 {
     if (this->age_group == "Baby")
@@ -90,21 +127,4 @@ int Animal::get_revenue()
     {
         return this->cost * this->revenue_mult;
     }
-}
-
-void Animal::print_all()
-{
-    std::cout << "Name:         "
-              << this->name << std::endl
-              << "Species:      "
-              << this->species << std::endl
-              << "Age:          "
-              << this->age << std::endl
-              << "Age Group:    "
-              << this->age_group << std::endl
-              << "Cost:         "
-              << this->cost << std::endl
-              << "Num Babies:   "
-              << this->num_babies << std::endl
-              << std::endl;
 }

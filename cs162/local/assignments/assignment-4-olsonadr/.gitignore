@@ -1,0 +1,4 @@
+include/*.sw*
+src/*.sw*
+doc/*.sw*
+*.sw*

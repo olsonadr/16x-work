@@ -7,7 +7,7 @@
             "label": "Build",
             "type": "shell",
 
-            "command": "cd ~/cs/misc/cpp_panels && make",
+            "command": "cd ${fileDirname} && make",
 
             "group": {
                 "kind":"build",

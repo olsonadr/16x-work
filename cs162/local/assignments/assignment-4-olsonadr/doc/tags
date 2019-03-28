@@ -1,0 +1,233 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ALERT_HPP	lib/headers/Alert.hpp	8;"	d
+Alert	lib/headers/Alert.hpp	/^class Alert : public Element$/;"	c
+BATS_HPP	source/headers/Bats.hpp	10;"	d
+BORDER_HPP	lib/headers/Border.hpp	10;"	d
+BUFFER_TOGGLE_HPP	source/headers/BufferToggle.hpp	10;"	d
+Bats	source/Bats.cpp	/^Bats::Bats(int cave_w, int cave_h)$/;"	f	class:Bats
+Bats	source/headers/Bats.hpp	/^class Bats : public Event$/;"	c
+Border	lib/headers/Border.hpp	/^class Border : public Element$/;"	c
+BufferToggle	source/headers/BufferToggle.hpp	/^class BufferToggle$/;"	c
+CONSOLE_HPP	lib/headers/Console.hpp	9;"	d
+CONTAINER_HPP	lib/headers/Container.hpp	8;"	d
+Console	lib/headers/Console.hpp	/^class Console : public Element$/;"	c
+Container	lib/headers/Container.hpp	/^class Container : public Element$/;"	c
+DYNAMIC_ELEMENT	lib/headers/Element.hpp	9;"	d
+ELEMENT_HPP	lib/headers/Element.hpp	7;"	d
+EVENT_HPP	source/headers/Event.hpp	10;"	d
+Element	lib/headers/Element.hpp	/^class Element$/;"	c
+Event	source/headers/Event.hpp	/^class Event$/;"	c
+GAME_HPP	source/headers/Game.hpp	10;"	d
+GAME_IS_OVER	source/headers/Event.hpp	13;"	d
+GAME_IS_OVER	source/headers/Game.hpp	13;"	d
+GAME_IS_OVER	source/headers/Player.hpp	13;"	d
+GAME_IS_OVER	source/headers/Room.hpp	13;"	d
+GAME_NOT_OVER	source/headers/Event.hpp	16;"	d
+GAME_NOT_OVER	source/headers/Game.hpp	16;"	d
+GAME_NOT_OVER	source/headers/Player.hpp	16;"	d
+GAME_NOT_OVER	source/headers/Room.hpp	16;"	d
+GOLD_HPP	source/headers/Gold.hpp	10;"	d
+Game	source/Game.cpp	/^Game::Game(int cave_w, int cave_h)$/;"	f	class:Game
+Game	source/headers/Game.hpp	/^class Game$/;"	c
+Gold	source/headers/Gold.hpp	/^class Gold : public Event$/;"	c
+HORIZONTAL_LABEL	lib/headers/Label.hpp	11;"	d
+HORIZONTAL_LIST	lib/headers/List.hpp	12;"	d
+LABEL_HPP	lib/headers/Label.hpp	8;"	d
+LIST_HPP	lib/headers/List.hpp	9;"	d
+Label	lib/headers/Label.hpp	/^class Label : public Element$/;"	c
+List	lib/headers/List.hpp	/^class List : public Container$/;"	c
+MAX_INPUT_SIZE	lib/headers/Console.hpp	11;"	d
+PANEL_HPP	lib/headers/Panel.hpp	10;"	d
+PIT_HPP	source/headers/Pit.hpp	10;"	d
+PLAYER_HPP	source/headers/Player.hpp	10;"	d
+Panel	lib/headers/Panel.hpp	/^        Panel(const Panel & old_panel, bool is_dynamic = STATIC_ELEMENT)$/;"	f	class:Panel
+Panel	lib/headers/Panel.hpp	/^        Panel(int pos_x, int pos_y,$/;"	f	class:Panel
+Panel	lib/headers/Panel.hpp	/^class Panel : public Container$/;"	c
+Pit	source/headers/Pit.hpp	/^class Pit : public Event$/;"	c
+Player	source/headers/Player.hpp	/^        Player()$/;"	f	class:Player
+Player	source/headers/Player.hpp	/^class Player$/;"	c
+ROOM_HPP	source/headers/Room.hpp	10;"	d
+Room	source/headers/Room.hpp	/^        Room() : has_event(false), contained_event(nullptr) {}$/;"	f	class:Room
+Room	source/headers/Room.hpp	/^class Room$/;"	c
+STATIC_ELEMENT	lib/headers/Element.hpp	10;"	d
+VERTICAL_LABEL	lib/headers/Label.hpp	10;"	d
+VERTICAL_LIST	lib/headers/List.hpp	11;"	d
+WINDOW_HPP	lib/headers/Window.hpp	8;"	d
+WUMPUS_HPP	source/headers/Wumpus.hpp	10;"	d
+Window	lib/headers/Window.hpp	/^        Window(const Window & old_window)$/;"	f	class:Window
+Window	lib/headers/Window.hpp	/^        Window(int width, int height,$/;"	f	class:Window
+Window	lib/headers/Window.hpp	/^class Window : public Container$/;"	c
+Wumpus	source/headers/Wumpus.hpp	/^class Wumpus : public Event$/;"	c
+add_to_rand_empty_room	source/Game.cpp	/^Room * Game::add_to_rand_empty_room(Event * to_add)$/;"	f	class:Game
+alert_and_pause	source/Game.cpp	/^void Game::alert_and_pause(std::string message)$/;"	f	class:Game
+bg_char	lib/headers/Alert.hpp	/^        char bg_char;$/;"	m	class:Alert
+bg_char	lib/headers/Console.hpp	/^        char bg_char;		    \/* The character to be put in empty space *\/$/;"	m	class:Console
+bg_char	lib/headers/Container.hpp	/^        char bg_char;	      \/* The character to be put in empty space *\/$/;"	m	class:Container
+border	lib/headers/Alert.hpp	/^        Border * border;$/;"	m	class:Alert
+bottom_char	lib/headers/Border.hpp	/^        char bottom_char;$/;"	m	class:Border
+bt	source/headers/Game.hpp	/^        BufferToggle bt;$/;"	m	class:Game
+cave_height	source/headers/Bats.hpp	/^        int cave_height;$/;"	m	class:Bats
+cave_height	source/headers/Game.hpp	/^        int cave_width, cave_height;$/;"	m	class:Game
+cave_height	source/headers/Player.hpp	/^        int cave_height;$/;"	m	class:Player
+cave_str_x	source/headers/Game.hpp	/^	int cave_str_x, cave_str_y;$/;"	m	class:Game
+cave_str_y	source/headers/Game.hpp	/^	int cave_str_x, cave_str_y;$/;"	m	class:Game
+cave_width	source/headers/Bats.hpp	/^        int cave_width;$/;"	m	class:Bats
+cave_width	source/headers/Game.hpp	/^        int cave_width, cave_height;$/;"	m	class:Game
+cave_width	source/headers/Player.hpp	/^        int cave_width;$/;"	m	class:Player
+cleanup	source/Game.cpp	/^void Game::cleanup()$/;"	f	class:Game
+clear_event	source/Room.cpp	/^void Room::clear_event()$/;"	f	class:Room
+contained_event	source/headers/Room.hpp	/^        Event * contained_event;$/;"	m	class:Room
+corner_char	lib/headers/Border.hpp	/^        char corner_char;$/;"	m	class:Border
+dim	lib/headers/Console.hpp	/^        struct int_duple dim;	    \/* Dimensions of the container *\/$/;"	m	class:Console	typeref:struct:Console::int_duple
+dim	lib/headers/Container.hpp	/^        struct int_duple dim; \/* Dimensions of the container *\/$/;"	m	class:Container	typeref:struct:Container::int_duple
+display_input_line	lib/headers/Console.hpp	/^        bool display_input_line;    \/* Whether the input area should be displayed *\/$/;"	m	class:Console
+dynamic_str	lib/headers/Label.hpp	/^        bool dynamic_str;$/;"	m	class:Label
+enter_room	source/Game.cpp	/^bool Game::enter_room()$/;"	f	class:Game
+exit_x	source/headers/Game.hpp	/^        int exit_x, exit_y;$/;"	m	class:Game
+exit_y	source/headers/Game.hpp	/^        int exit_x, exit_y;$/;"	m	class:Game
+find_wumpus_room	source/Game.cpp	/^Room * Game::find_wumpus_room()$/;"	f	class:Game
+game_console	source/headers/Game.hpp	/^	Console * game_console;$/;"	m	class:Game
+game_over_screen	source/Game.cpp	/^bool Game::game_over_screen()$/;"	f	class:Game
+game_window	source/headers/Game.hpp	/^	Window * game_window;$/;"	m	class:Game
+generate_map	source/Game.cpp	/^void Game::generate_map(int new_width, int new_height)$/;"	f	class:Game
+generate_map_str	source/Game.cpp	/^void Game::generate_map_str(char *& rooms_str,$/;"	f	class:Game
+generate_percepts	source/Game.cpp	/^void Game::generate_percepts()$/;"	f	class:Game
+get_bg_char	lib/headers/Alert.hpp	/^        char get_bg_char() { return this->bg_char; }$/;"	f	class:Alert
+get_bg_char	lib/headers/Console.hpp	/^        char get_bg_char() { return this->bg_char; }$/;"	f	class:Console
+get_bg_char	lib/headers/Container.hpp	/^        char get_bg_char() { return this->bg_char; }$/;"	f	class:Container
+get_bottom_char	lib/headers/Alert.hpp	/^        char get_bottom_char() { return this->border->get_bottom_char(); }$/;"	f	class:Alert
+get_bottom_char	lib/headers/Border.hpp	/^        char get_bottom_char() { return this->bottom_char; }$/;"	f	class:Border
+get_corner_char	lib/headers/Alert.hpp	/^        char get_corner_char() { return this->border->get_corner_char(); }$/;"	f	class:Alert
+get_corner_char	lib/headers/Border.hpp	/^        char get_corner_char() { return this->corner_char; }$/;"	f	class:Border
+get_dim	lib/headers/Console.hpp	/^        int_duple get_dim() { return this->dim; }$/;"	f	class:Console
+get_dim	lib/headers/Container.hpp	/^        int_duple get_dim() { return this->dim; }$/;"	f	class:Container
+get_display_input	lib/headers/Console.hpp	/^        bool get_display_input() { return this->display_input_line; }$/;"	f	class:Console
+get_enter_text	source/Bats.cpp	/^std::string Bats::get_enter_text()$/;"	f	class:Bats
+get_enter_text	source/Gold.cpp	/^std::string Gold::get_enter_text()$/;"	f	class:Gold
+get_enter_text	source/Pit.cpp	/^std::string Pit::get_enter_text()$/;"	f	class:Pit
+get_enter_text	source/Wumpus.cpp	/^std::string Wumpus::get_enter_text()$/;"	f	class:Wumpus
+get_event_name	source/Room.cpp	/^std::string Room::get_event_name()$/;"	f	class:Room
+get_has_changed	lib/headers/Element.hpp	/^        virtual bool get_has_changed() { return this->has_changed; }$/;"	f	class:Element
+get_has_event	source/headers/Room.hpp	/^        bool get_has_event() { return this->has_event; }$/;"	f	class:Room
+get_has_gold	source/headers/Player.hpp	/^        bool get_has_gold()		{ return this->has_gold; }$/;"	f	class:Player
+get_has_killed_wumpus	source/headers/Player.hpp	/^        bool get_has_killed_wumpus()	{ return this->has_killed_wumpus; }$/;"	f	class:Player
+get_is_dynamic	lib/headers/Element.hpp	/^        bool get_is_dynamic() { return this->is_dynamic; }$/;"	f	class:Element
+get_is_vertical	lib/headers/Label.hpp	/^        bool get_is_vertical() { return this->is_vertical; }$/;"	f	class:Label
+get_is_vertical	lib/headers/List.hpp	/^        bool get_is_vertical() { return this->is_vertical; }$/;"	f	class:List
+get_is_visible	lib/headers/Element.hpp	/^        bool get_is_visible() { return this->is_visible; }$/;"	f	class:Element
+get_left_char	lib/headers/Alert.hpp	/^        char get_left_char() { return this->border->get_left_char(); }$/;"	f	class:Alert
+get_left_char	lib/headers/Border.hpp	/^        char get_left_char() { return this->left_char; }$/;"	f	class:Border
+get_len	lib/headers/Alert.hpp	/^        int get_len() { return this->len; }$/;"	f	class:Alert
+get_len	lib/headers/Label.hpp	/^        int get_len() { return this->len; }$/;"	f	class:Label
+get_member	lib/headers/Container.hpp	/^        Element * get_member(int index) { return this->members[index]; }$/;"	f	class:Container
+get_message	lib/headers/Alert.hpp	/^        const char * get_message() { return this->message; }$/;"	f	class:Alert
+get_n_arrows	source/headers/Player.hpp	/^        int get_n_arrows()		{ return this->n_arrows; }$/;"	f	class:Player
+get_n_members	lib/headers/Container.hpp	/^        int get_n_members() { return this->n_members; }$/;"	f	class:Container
+get_name	lib/headers/Element.hpp	/^        const char * get_name() { return this->name; }$/;"	f	class:Element
+get_name	source/headers/Bats.hpp	/^        std::string get_name()	     { return "Super Bats"; }$/;"	f	class:Bats
+get_name	source/headers/Gold.hpp	/^        std::string get_name()	    { return "Gold"; }$/;"	f	class:Gold
+get_name	source/headers/Pit.hpp	/^        std::string get_name()	    { return "Bottomless Pit"; }$/;"	f	class:Pit
+get_name	source/headers/Wumpus.hpp	/^        std::string get_name()	    { return "The Wumpus"; }$/;"	f	class:Wumpus
+get_percept	source/Room.cpp	/^std::string Room::get_percept()$/;"	f	class:Room
+get_percept	source/headers/Bats.hpp	/^        std::string get_percept()    { return "You hear wings flapping."; }$/;"	f	class:Bats
+get_percept	source/headers/Gold.hpp	/^        std::string get_percept()   { return "You see a glimmer nearby."; }$/;"	f	class:Gold
+get_percept	source/headers/Pit.hpp	/^        std::string get_percept()   { return "You feel a breeze."; }$/;"	f	class:Pit
+get_percept	source/headers/Wumpus.hpp	/^        std::string get_percept()   { return "You smell a terrible stench."; }$/;"	f	class:Wumpus
+get_pos	lib/headers/Element.hpp	/^        int_duple get_pos() { return this->pos; }$/;"	f	class:Element
+get_right_char	lib/headers/Alert.hpp	/^        char get_right_char() { return this->border->get_right_char(); }$/;"	f	class:Alert
+get_right_char	lib/headers/Border.hpp	/^        char get_right_char() { return this->right_char; }$/;"	f	class:Border
+get_str	lib/headers/Label.hpp	/^        const char * get_str() { return this->str; }$/;"	f	class:Label
+get_top_char	lib/headers/Alert.hpp	/^        char get_top_char() { return this->border->get_top_char(); }$/;"	f	class:Alert
+get_top_char	lib/headers/Border.hpp	/^        char get_top_char() { return this->top_char; }$/;"	f	class:Border
+get_type	lib/headers/Element.hpp	/^        const char * get_type() { return this->type; }$/;"	f	class:Element
+get_x_pos	source/headers/Player.hpp	/^        int get_x_pos()			{ return this->x_pos; }$/;"	f	class:Player
+get_y_pos	source/headers/Player.hpp	/^        int get_y_pos()			{ return this->y_pos; }$/;"	f	class:Player
+handle_input	source/Game.cpp	/^bool Game::handle_input()$/;"	f	class:Game
+handle_player	source/Bats.cpp	/^bool Bats::handle_player(Player * p)$/;"	f	class:Bats
+handle_player	source/Gold.cpp	/^bool Gold::handle_player(Player * p)$/;"	f	class:Gold
+handle_player	source/Pit.cpp	/^bool Pit::handle_player(Player * p)$/;"	f	class:Pit
+handle_player	source/Room.cpp	/^bool Room::handle_player(Player * p)$/;"	f	class:Room
+handle_player	source/Wumpus.cpp	/^bool Wumpus::handle_player(Player * p)$/;"	f	class:Wumpus
+has_changed	lib/headers/Element.hpp	/^        bool has_changed;$/;"	m	class:Element
+has_event	source/headers/Room.hpp	/^        bool has_event;$/;"	m	class:Room
+has_gold	source/headers/Player.hpp	/^        bool has_gold;$/;"	m	class:Player
+has_killed_wumpus	source/headers/Player.hpp	/^        bool has_killed_wumpus;$/;"	m	class:Player
+has_wumpus	source/Room.cpp	/^bool Room::has_wumpus()$/;"	f	class:Room
+history	lib/headers/Console.hpp	/^        char ** history;	    \/* The history of inputs and outputs *\/$/;"	m	class:Console
+history_len	lib/headers/Console.hpp	/^        int history_len;	    \/* The maximum length of the history *\/$/;"	m	class:Console
+history_num	lib/headers/Console.hpp	/^        int history_num;	    \/* The number of strings in history *\/$/;"	m	class:Console
+init_gold_room	source/headers/Game.hpp	/^	Room * init_gold_room;$/;"	m	class:Game
+init_height	lib/headers/Window.hpp	/^        int init_width, init_height;$/;"	m	class:Window
+init_width	lib/headers/Window.hpp	/^        int init_width, init_height;$/;"	m	class:Window
+init_wump_room	source/headers/Game.hpp	/^	Room * init_wump_room;$/;"	m	class:Game
+input	source/Game.cpp	/^std::string Game::input(std::string prompt)$/;"	f	class:Game
+input_pos	lib/headers/Console.hpp	/^        struct int_duple input_pos; \/* The global position of the input cursor *\/$/;"	m	class:Console	typeref:struct:Console::int_duple
+input_prefix	lib/headers/Console.hpp	/^        const char * input_prefix;  \/* The string preceding the input field *\/$/;"	m	class:Console
+input_prefix_len	lib/headers/Console.hpp	/^        int input_prefix_len;	    \/* The length of the input prefix *\/$/;"	m	class:Console
+int_duple	lib/headers/Element.hpp	/^struct int_duple$/;"	s
+is_dynamic	lib/headers/Element.hpp	/^        bool is_dynamic;$/;"	m	class:Element
+is_vertical	lib/headers/Label.hpp	/^        bool is_vertical;$/;"	m	class:Label
+is_vertical	lib/headers/List.hpp	/^        bool is_vertical;$/;"	m	class:List
+is_visible	lib/headers/Element.hpp	/^        bool is_visible;$/;"	m	class:Element
+left_char	lib/headers/Border.hpp	/^        char left_char;$/;"	m	class:Border
+len	lib/headers/Alert.hpp	/^        int len;$/;"	m	class:Alert
+len	lib/headers/Label.hpp	/^        int len;$/;"	m	class:Label
+len_members	lib/headers/Container.hpp	/^        int len_members;      \/* Length of members arr *\/$/;"	m	class:Container
+main	hunt_the_wumpus.cpp	/^int main(int argc, char * argv[])$/;"	f
+margins	lib/headers/List.hpp	/^        int margins;$/;"	m	class:List
+members	lib/headers/Container.hpp	/^        Element ** members;   \/* Dynamic array of Element pointers *\/$/;"	m	class:Container
+merged_arr	lib/headers/Console.hpp	/^        char * merged_arr;	    \/* The merged array returned by merge() *\/$/;"	m	class:Console
+merged_arr	lib/headers/Container.hpp	/^        char * merged_arr;    \/* Dynamic 1D arr of chars of merged layers *\/$/;"	m	class:Container
+message	lib/headers/Alert.hpp	/^        const char * message;$/;"	m	class:Alert
+move	source/Player.cpp	/^void Player::move(std::string direction)$/;"	f	class:Player
+move_p_to_rand_empty_room	source/Game.cpp	/^void Game::move_p_to_rand_empty_room()$/;"	f	class:Game
+move_to	source/Player.cpp	/^void Player::move_to(int x, int y)$/;"	f	class:Player
+n_arrows	source/headers/Player.hpp	/^        int n_arrows;$/;"	m	class:Player
+n_members	lib/headers/Container.hpp	/^        int n_members;        \/* Number of members in members arr *\/$/;"	m	class:Container
+name	lib/headers/Element.hpp	/^        const char * name;$/;"	m	class:Element
+off	source/BufferToggle.cpp	/^void BufferToggle::off()$/;"	f	class:BufferToggle
+on	source/BufferToggle.cpp	/^void BufferToggle::on()$/;"	f	class:BufferToggle
+operator =	lib/headers/Panel.hpp	/^        void operator=(const Panel & old_panel) { Container::operator=(old_panel); }$/;"	f	class:Panel
+output	source/Game.cpp	/^void Game::output(std::string message)$/;"	f	class:Game
+p	source/headers/Game.hpp	/^        Player * p;$/;"	m	class:Game
+p_l_x_off	source/headers/Game.hpp	/^	int p_l_x_off, p_l_y_off;$/;"	m	class:Game
+p_l_y_off	source/headers/Game.hpp	/^	int p_l_x_off, p_l_y_off;$/;"	m	class:Game
+padding	lib/headers/List.hpp	/^        int padding;$/;"	m	class:List
+player_label	source/headers/Game.hpp	/^	Label * player_label;$/;"	m	class:Game
+pos	lib/headers/Element.hpp	/^        struct int_duple pos;$/;"	m	class:Element	typeref:struct:Element::int_duple
+print_map	source/Game.cpp	/^void Game::print_map()$/;"	f	class:Game
+reset_arrows	source/headers/Player.hpp	/^        void reset_arrows()			{ this->n_arrows = 3; }$/;"	f	class:Player
+right_char	lib/headers/Border.hpp	/^        char right_char;$/;"	m	class:Border
+room_h	source/headers/Game.hpp	/^	int room_w, room_h;$/;"	m	class:Game
+room_w	source/headers/Game.hpp	/^	int room_w, room_h;$/;"	m	class:Game
+rooms	source/headers/Game.hpp	/^        std::vector<std::vector<Room *>> rooms;$/;"	m	class:Game
+set_bottom_char	lib/headers/Border.hpp	/^        void set_bottom_char(char m_char) { this->bottom_char = m_char; }$/;"	f	class:Border
+set_corner_char	lib/headers/Border.hpp	/^        void set_corner_char(char m_char) { this->corner_char = m_char; }$/;"	f	class:Border
+set_dims	source/Player.cpp	/^void Player::set_dims(int w, int h)$/;"	f	class:Player
+set_event	source/Room.cpp	/^void Room::set_event(Event * new_event)$/;"	f	class:Room
+set_has_gold	source/headers/Player.hpp	/^        void set_has_gold(bool val)		{ this->has_gold = val; }$/;"	f	class:Player
+set_has_killed_wumpus	source/headers/Player.hpp	/^        void set_has_killed_wumpus(bool val)	{ this->has_killed_wumpus = val; }$/;"	f	class:Player
+set_left_char	lib/headers/Border.hpp	/^        void set_left_char(char m_char) { this->left_char = m_char; }$/;"	f	class:Border
+set_right_char	lib/headers/Border.hpp	/^        void set_right_char(char m_char) { this->right_char = m_char; }$/;"	f	class:Border
+set_top_char	lib/headers/Border.hpp	/^        void set_top_char(char m_char) { this->top_char = m_char; }$/;"	f	class:Border
+setup	source/Game.cpp	/^void Game::setup()$/;"	f	class:Game
+shoot	source/Player.cpp	/^bool Player::shoot()$/;"	f	class:Player
+shoot_arrow	source/Game.cpp	/^bool Game::shoot_arrow(std::string direction)$/;"	f	class:Game
+str	lib/headers/Label.hpp	/^        const char * str;$/;"	m	class:Label
+t	source/headers/BufferToggle.hpp	/^        struct termios t;$/;"	m	class:BufferToggle	typeref:struct:BufferToggle::termios
+term_info	lib/headers/Console.hpp	/^        struct termios term_info;   \/* The termios allowing for echo manip, etc *\/$/;"	m	class:Console	typeref:struct:Console::termios
+term_info	lib/headers/Window.hpp	/^        struct termios term_info;$/;"	m	class:Window	typeref:struct:Window::termios
+top_char	lib/headers/Border.hpp	/^        char top_char;$/;"	m	class:Border
+type	lib/headers/Element.hpp	/^        const char * type;$/;"	m	class:Element
+unbuffered_char_input	source/Game.cpp	/^std::string Game::unbuffered_char_input(std::string prompt)$/;"	f	class:Game
+update_p_str_pos	source/Game.cpp	/^void Game::update_p_str_pos()$/;"	f	class:Game
+x	lib/headers/Element.hpp	/^    int x;$/;"	m	struct:int_duple
+x_pos	source/headers/Player.hpp	/^        int x_pos;$/;"	m	class:Player
+y	lib/headers/Element.hpp	/^    int y;$/;"	m	struct:int_duple
+y_pos	source/headers/Player.hpp	/^        int y_pos;$/;"	m	class:Player
+~Game	source/Game.cpp	/^Game::~Game()$/;"	f	class:Game

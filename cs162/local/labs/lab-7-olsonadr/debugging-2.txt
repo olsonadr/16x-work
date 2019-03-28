@@ -1,0 +1,5 @@
+I set breakpoints at 32 and 38 to check how the Dynarrays compare.
+
+Printing d1, d2, and d3, it is clear that d1, d2, and d3 (at both points) have the same memory address for their data arrays. This is probably because there is no copy contructor for Dynarray so the d3=d1 at 30 copies the memory address literally, meaning the decunstructors delete the same array for each. To fix this, must write copy constructors and assignment overloads in dynarray.cpp.
+
+This worked.

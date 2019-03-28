@@ -1,0 +1,3 @@
+[submodule "lib/cpp_panels"]
+	path = lib/cpp_panels
+	url = https://github.com/olsonadr/cpp_panels.git

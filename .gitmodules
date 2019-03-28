@@ -37,3 +37,23 @@
 [submodule "cs162/labs/lab-7-olsonadr"]
 	path = cs162/labs/lab-7-olsonadr
 	url = git@github.com:OSU-CS162-W19/lab-7-olsonadr.git
+[submodule "cs162/labs/lab-8-olsonadr"]
+	path = cs162/labs/lab-8-olsonadr
+	url = git@github.com:OSU-CS162-W19/lab-8-olsonadr.git
+[submodule "cs162/assignments/assignment-4-olsonadr"]
+	path = cs162/assignments/assignment-4-olsonadr
+	url = git@github.com:OSU-CS162-W19/assignment-4-olsonadr.git
+[submodule "cs162/labs/lab-9-olsonadr"]
+	path = cs162/labs/lab-9-olsonadr
+	url = git@github.com:OSU-CS162-W19/lab-9-olsonadr.git
+[submodule "cs162/local/assignments/assignment-4-olsonadr/lib/cpp_panels"]
+	path = cs162/local/assignments/assignment-4-olsonadr/lib/cpp_panels
+	url = git@github.com:olsonadr/cpp_panels.git
+	branch = master
+[submodule "misc/restructured_branch/cpp_panels"]
+	path = misc/restructured_branch/cpp_panels
+	url = git@github.com:olsonadr/cpp_panels.git
+	branch = restructured
+[submodule "cs162/assignments/final-project-olsonadr"]
+	path = cs162/assignments/final-project-olsonadr
+	url = git@github.com:OSU-CS162-W19/final-project-olsonadr.git
